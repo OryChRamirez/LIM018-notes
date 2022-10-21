@@ -1,26 +1,64 @@
-<section>
-    <div class="cont-form">
-        <form class="form-register">
-          <h3 class="slogan slogan-register">Registrate y forma parte de la comunidad</h3>
-          <button type="button" class="btn-google btn-general"><i class="bi bi-google"></i>
-            Iniciar sesión con google</button>
-          <div class="separator"><hr class="hr">O<hr class="hr"></div>
-          <div class="cont-inputs-register">
-            <input id="email" class="input-register" type="email" placeholder="Correo electrónico">
-            <input id="name" class="input-register" type="text" placeholder="Nombre completo">
-            <input id="nickname" class="input-register" type="text" placeholder="Nombre de usuario">
-            <input id="password" class="input-register" type="password" placeholder="Contraseña">
-          </div>
-          <button type="button" class="btn-enter btn-general">Registrar</button>
-          <p id="message-error"></p>
-          <div class="links-redirect">¿Ya eres miembro? <a class="links-redirect" href="#/login">Inicia sesión ahora</a></div>
-        </form>
+<section class="seccFormRegister">
+  <div class="contForm">
+    <p>Registrate</p>
+    <div class="logo">
+      <div class="firstLogo">
+        <h1>LAB</h1>
       </div>
-      <div id="modal-message" class="modal">
-        <div class="modal-cont">
-          <h2>Verifica tu correo</h2>
-          <p>Te hemos enviado un correo electrónico, verificalo e inicia sesión</p>
-          <button type="button" class="btn-redirect btn-general">Ir a Iniciar Sesión</button>
-        </div> 
+      <div class="secondLogo">
+        <h1>Notes</h1>
       </div>
+    </div>
+    <form class="formRegister">
+      <button type="button" class="btnGoogle btnGeneral">
+        <i class="bi bi-google"></i> Iniciar sesión con google
+      </button>
+      <div class="separator">
+        <hr class="hr" />
+        O
+        <hr class="hr" />
+      </div>
+      <div class="contInputRegister">
+        <input
+          id="email"
+          class="inputRegister"
+          type="email"
+          placeholder="Correo electrónico"
+        />
+        <input
+          id="name"
+          class="inputRegister"
+          type="text"
+          placeholder="Nombre completo"
+        />
+        <input
+          id="nickname"
+          class="inputRegister"
+          type="text"
+          placeholder="Nombre de usuario"
+        />
+        <input
+          id="password"
+          class="inputRegister"
+          type="password"
+          placeholder="Contraseña"
+        />
+      </div>
+      <button type="button" class="btnEnter btnGeneral">Registrar</button>
+      <p id="message-error"></p>
+      <div class="links-redirect">
+        ¿Ya eres miembro?
+        <a class="linksRedirect" href="#/login">Inicia sesión ahora</a>
+      </div>
+    </form>
+  </div>
+  <!-- <div id="modal-message" class="modal">
+    <div class="modalCont">
+      <h2>Verifica tu correo</h2>
+      <p>Te hemos enviado un correo electrónico, verificalo e inicia sesión</p>
+      <button type="button" class="btnRedirect btnGeneral">
+        Ir a Iniciar Sesión
+      </button>
+    </div>
+  </div> -->
 </section>
