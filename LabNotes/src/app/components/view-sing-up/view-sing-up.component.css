@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Merriweather:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Merriweather:wght@300;700&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -18,15 +18,19 @@ font-family: 'Merriweather', serif; */
     display: flex;
     flex-direction: column;
     width: 25.625rem;
-    height: 36.875rem;
+    height: 40.875rem;
     background-color: #fff;
     margin: auto;
     border-radius: 1.5rem;
+    gap: 1rem;
+    padding: 1rem 0;
 }
 
 .contForm > p {
     font-family: 'Libre Baskerville', serif;
     font-size: 1.5rem;
+    align-self: center;
+    font-weight: 700;
 }
 /* ---------- LOGO ---------- */
 .logo {
@@ -48,7 +52,7 @@ font-family: 'Merriweather', serif; */
 }
 .secondLogo {
     margin-left: -0.2rem;
-    padding: 0 0.2rem;
+    padding: 0.25rem;
     background-color: #000;
     color: #fff;
     border-radius: 0.2rem;
@@ -74,29 +78,49 @@ font-family: 'Merriweather', serif; */
     background-color: #483B3B;
     color: #FFFFFF;
     align-items: center;
-    justify-content: space-evenly;
+    gap: 0.5rem;
+    justify-content: center;
 }
 /* -------------  REGISTRO ------------- */
 
  .inputRegister {
-    width: 25rem;
+    width: 20rem;
     height: 4rem;
     border-radius: 0.5rem;
     border-color: #d9d9d9;
     margin: auto;
-    padding: 0 20px;
+    padding: 0 0.5rem;
     font-weight: 700;
 }
 
 .formRegister {
     display: flex;
     flex-direction: column;
-    row-gap: 17px;
+    row-gap: 0.5rem;
     justify-content: center;
     align-items: center;
     height: 100%;
-    padding-top: 40px;
 }
+
+.contInputRegister {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    width: 100%;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hr {
+    width: 150px;
+    height: 1px;
+    margin: 20px;
+  }
+  
 /*
 .screen-register {
     height: 100vh;
