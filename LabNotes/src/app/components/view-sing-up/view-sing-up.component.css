@@ -65,7 +65,7 @@ font-family: 'Merriweather', serif; */
     font-weight: 400;
     font-size: 1.3rem;
     width: 9.5rem;
-    height: 3.5rem;
+    height: 2.5rem;
     border-radius: 0.5rem;
     border: none;
     filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.5));
@@ -95,7 +95,6 @@ font-family: 'Merriweather', serif; */
 
 .linksRedirect {
     text-decoration: none;
-
 }
 
 .formRegister {

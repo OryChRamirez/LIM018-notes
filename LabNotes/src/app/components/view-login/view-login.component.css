@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Merriweather:wght@300;700&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 .seccFormLogin {
     display: flex;
     width: 100vw;
@@ -57,12 +64,15 @@
 .formLogin {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
+    row-gap: 1.5rem;
     justify-content: center;
     align-items: center;
     height: 100%;
 }
 
+.linksRedirect {
+    text-decoration: none;
+}
 
 .inputLogin {
     width: 20rem;
@@ -76,7 +86,7 @@
 .contInputLogin {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
+    row-gap: 1rem;
     width: 100%;
 }
 
@@ -98,7 +108,7 @@
     font-weight: 400;
     font-size: 1.3rem;
     width: 9.5rem;
-    height: 3.5rem;
+    height: 2.5rem;
     border-radius: 0.5rem;
     border: none;
     filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.5));
