@@ -10,7 +10,7 @@
       </div>
     </div>
     <form class="formRegister">
-      <button type="button" class="btnGoogle btnGeneral">
+      <button type="button" class="btnGoogle btnGeneral" (click)="onSubmitGoogle()">
         <i class="bi bi-google"></i> Iniciar sesión con google
       </button>
       <div class="separator">
@@ -20,35 +20,35 @@
       </div>
       <div class="contInputRegister">
         <input
-          id="email"
+          #emailUser
           class="inputRegister"
           type="email"
           placeholder="Correo electrónico"
         />
         <input
-          id="name"
+          #nameUser
           class="inputRegister"
           type="text"
           placeholder="Nombre completo"
         />
         <input
-          id="nickname"
+          #nickNameUser
           class="inputRegister"
           type="text"
           placeholder="Nombre de usuario"
         />
         <input
-          id="password"
+          #passwordUser
           class="inputRegister"
           type="password"
           placeholder="Contraseña"
         />
       </div>
-      <button type="button" class="btnEnter btnGeneral">Registrar</button>
-      <p id="message-error"></p>
-      <div class="links-redirect">
+      <button type="button" class="btnEnter btnGeneral" (click)="onSubmitEmailAndPass()">Registrar</button>
+      <!-- <p id="message-error"></p> -->
+      <div class="linksRedirect">
         ¿Ya eres miembro?
-        <a class="linksRedirect" href="#/login">Inicia sesión ahora</a>
+        <a class="linksRedirect" href="/login">Inicia sesión ahora</a>
       </div>
     </form>
   </div>
