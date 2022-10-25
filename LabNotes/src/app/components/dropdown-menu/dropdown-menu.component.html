@@ -1,0 +1,49 @@
+<section #seccContDropdownMenu class="contdropdownMenu">
+  <button #btnDropdownMenu type="button" class="btnGeneral btnDropdownMenu" (click)="activeDropdownMenu()">
+    <i class="bi bi-list"></i>
+  </button>
+  <ul class="ulList">
+    <li>
+      <button type="button" class="btnGeneral btnContUser">
+        <i class="bi bi-person-circle"></i>
+        <span *ngIf="this.dropdownMenu">María</span>
+      </button>
+    </li>
+    <div>
+      <hr class="hr" />
+    </div>
+    <li>
+      <button type="button" class="btnGeneral btnContNotes">
+          <i class="bi bi-journal-text"></i>
+          <span *ngIf="this.dropdownMenu">Notas</span>
+      </button>
+    </li>
+    <div>
+      <hr class="hr" />
+    </div>
+    <li>
+      <button type="button" class="btnGeneral btnContLabels">
+          <i class="bi bi-bookmark"></i>
+          <span *ngIf="this.dropdownMenu">Etiquetas</span>
+      </button>
+    </li>
+    <div>
+      <hr class="hr" />
+    </div>
+    <li>
+      <button type="button" class="btnGeneral btnContArchived">
+          <i class="bi bi-folder2-open"></i>
+          <span *ngIf="this.dropdownMenu">Archivados</span>
+      </button>
+    </li>
+    <div>
+      <hr class="hr" />
+    </div>
+    <li>
+      <button class="contTrash" class="btnGeneral contArchived">
+          <i class="bi bi-trash"></i>
+          <span *ngIf="this.dropdownMenu">Papelera</span>
+      </button>
+    </li>
+  </ul>
+</section>

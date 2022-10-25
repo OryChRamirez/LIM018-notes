@@ -37,7 +37,6 @@ font-family: 'Merriweather', serif; */
 .logo {
     margin: 0 auto;
     display: flex;
-    width: fit-content;
     height: 4rem;
     justify-content: center;
     align-items: center;
@@ -85,7 +84,7 @@ font-family: 'Merriweather', serif; */
 
  .inputRegister {
     width: 20rem;
-    height: 4rem;
+    height: 3rem;
     border-radius: 0.5rem;
     border-color: #d9d9d9;
     margin: auto;
@@ -101,7 +100,7 @@ font-family: 'Merriweather', serif; */
     display: flex;
     flex-direction: column;
     row-gap: 0.5rem;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     height: 100%;
 }
@@ -109,7 +108,7 @@ font-family: 'Merriweather', serif; */
 .contInputRegister {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
+    row-gap: 1.5rem;
     width: 100%;
 }
 

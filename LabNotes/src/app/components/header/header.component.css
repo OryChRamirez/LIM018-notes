@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Merriweather:wght@300;700&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.contHeader {
+    display: flex;
+    height: 3.5rem;
+    width: 100%;
+    background-color: #d9d9d9;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3%;
+    box-shadow: 0 0 0.5rem .2rem rgba(0, 0, 0, 0.25);
+    position: absolute;
+}
+
+/* ---------- LOGO ---------- */
+ .logo {
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+    box-shadow: 0 0 0.5rem .2rem rgba(0, 0, 0, 0.25);
+}
+
+.firstLogo {
+    border-radius: 0.2rem 0 0 0.2rem;
+    padding: 0 0.2rem;
+    line-height: 2.3rem;
+    background-color: white;
+}
+.secondLogo {
+    margin-left: -0.2rem;
+    padding: 0.25rem;
+    background-color: #000;
+    color: #fff;
+    border-radius: 0.2rem;
+
+}
+
+.btnGeneral {
+    border: none;
+    height: 4rem;
+    background-color: transparent;
+}
+
+.bi {
+    font-size: xx-large;
+}
+
+.contBtnsCenter {
+    display: flex;
+    width: 5rem;
+    height: auto;
+    justify-content: space-between;
+}
