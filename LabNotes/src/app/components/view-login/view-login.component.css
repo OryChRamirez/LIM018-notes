@@ -122,3 +122,8 @@
     gap: 0.5rem;
     justify-content: center;
 }
+
+.msgError {
+    color: red;
+    font-weight: 700;
+  }

@@ -16,6 +16,7 @@
           class="inputLogin"
           type="email"
           placeholder="Correo electrónico"
+          (change)="validationEmail($event)"
         />
         <input
           #passwordUser
@@ -24,19 +25,22 @@
           placeholder="Contraseña"
         />
       </div>
-      <button type="button" class="btnEnter btnGeneral">Entrar</button>
-      <!-- <p id="message-error"></p> -->
+      <button type="button" class="btnEnter btnGeneral" (click)="onSubmitWithEmailAndPass()">Entrar</button>
+      <div class="linksRedirect">
+        ¿Olvidaste tu <a class="linksRedirect" href="/forgert-password">contraseña</a> ?
+      </div>
+      <p #msgError class="msgError"></p>
       <div class="separator">
         <hr class="hr" />
         O
         <hr class="hr" />
       </div>
-      <button type="button" class="btnGoogle btnGeneral">
+      <button type="button" class="btnGoogle btnGeneral" (click)="onSubmitGoogle()">
         <i class="bi bi-google"></i> Iniciar sesión con google
       </button>
       <div class="linksRedirect">
         ¿Ya eres miembro?
-        <a class="linksRedirect" href="/sing-in">Inicia sesión ahora</a>
+        <a class="linksRedirect" href="/sing-in">Registrate ahora</a>
       </div>
     </form>
   </div>
