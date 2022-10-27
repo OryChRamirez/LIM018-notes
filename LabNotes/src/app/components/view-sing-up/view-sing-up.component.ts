@@ -1,11 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { ServicesService } from '../../services.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-view-sing-up',
   templateUrl: './view-sing-up.component.html',
   styleUrls: ['./view-sing-up.component.css']
+  
 })
 export class ViewSingUpComponent implements OnInit {
   constructor(
@@ -19,6 +21,7 @@ export class ViewSingUpComponent implements OnInit {
     @ViewChild('nicknameUser') nicknameUser!: ElementRef;
     @ViewChild('passwordUser') passwordUser!: ElementRef;
     @ViewChild('msgError') msgError!: ElementRef;
+    statusModal: boolean = false;
 
 
   ngOnInit(): void {
@@ -44,7 +47,7 @@ export class ViewSingUpComponent implements OnInit {
       this.msgError.nativeElement.innerHTML = '';
       this.service.register(emailUser, passwordUser)
       .then(response => {
-        this.router.navigate(['/login']);
+        this.statusModal = true;
       })
       .catch( (error) => {
         const errorMessage = error.message;
@@ -70,6 +73,10 @@ export class ViewSingUpComponent implements OnInit {
       console.log(this.msgError.nativeElement.innerHTML);
       this.msgError.nativeElement.innerHTML = 'Debes completar los campos';
     }
+  }
+  
+  returnToLoging() {
+    this.router.navigate(['login']);
   }
 
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE

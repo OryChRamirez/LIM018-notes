@@ -15,7 +15,7 @@ font-family: 'Merriweather', serif; */
     font-family: 'Merriweather', serif;
 }
 
-.contForm {
+.contForm, .contModalConfirm {
     display: flex;
     flex-direction: column;
     width: 25.625rem;
@@ -59,7 +59,7 @@ font-family: 'Merriweather', serif; */
 
 }
 
-/* ---------------- BTN GOOGLE ---------------- */
+/* ---------------- BTN ---------------- */
 .btnGeneral {
     font-weight: 400;
     font-size: 1.3rem;
@@ -79,6 +79,10 @@ font-family: 'Merriweather', serif; */
     align-items: center;
     gap: 0.5rem;
     justify-content: center;
+}
+
+.btnSingIn {
+    width: 12.5rem;
 }
 /* -------------  REGISTRO ------------- */
 
@@ -128,3 +132,32 @@ font-family: 'Merriweather', serif; */
     color: red;
     font-weight: 700;
   }
+
+  /* --------------- MODAL --------------------- */
+
+  .textDescription {
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.contModalConfirm {
+    position: absolute;
+    height: 17rem;
+    width: 27rem;
+    align-self: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.contIconCheck {
+    margin-bottom: -2rem;
+}
+.contIconCheck > .bi {
+    font-size: 5rem;
+    color: rgb(15, 170, 15);
+}

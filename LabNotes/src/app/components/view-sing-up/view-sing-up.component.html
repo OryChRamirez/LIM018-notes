@@ -1,5 +1,5 @@
 <section class="seccFormRegister">
-  <div class="contForm">
+  <div class="contForm" *ngIf="!statusModal">
     <p>Registrate</p>
     <div class="logo">
       <div class="firstLogo">
@@ -53,13 +53,12 @@
       </div>
     </form>
   </div>
-  <!-- <div id="modal-message" class="modal">
-    <div class="modalCont">
-      <h2>Verifica tu correo</h2>
-      <p>Te hemos enviado un correo electrónico, verificalo e inicia sesión</p>
-      <button type="button" class="btnRedirect btnGeneral">
-        Ir a Iniciar Sesión
-      </button>
+  <ng-template [ngIf]="statusModal">
+    <div class="contModalConfirm">
+      <div class="contIconCheck"><i class="bi bi-check-circle"></i></div>
+      <h3 class="txtConfirm">Verifica tu correo</h3>
+      <p class="txtConfirm">Te hemos enviado un correo electrónico, verificalo e inicia sesión</p>
+      <button type="button" class="btnSingIn btnGeneral" (click)="returnToLoging()">Ir a Iniciar Sesion</button>
     </div>
-  </div> -->
+  </ng-template>
 </section>
