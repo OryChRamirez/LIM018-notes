@@ -23,7 +23,6 @@ export class ForgetPasswordComponent implements OnInit {
 
   resetPass() {
     const emailUser = this.emailUser.nativeElement.value;
-    console.log('AJÁ');
     if(emailUser !== '') {
       this.msgError.nativeElement.innerHTML = '';
       this.service.resetPassword(this.emailUser.nativeElement.value)
@@ -37,7 +36,7 @@ export class ForgetPasswordComponent implements OnInit {
             this.msgError.nativeElement.innerHTML = 'Usuario no encontrado';
             break;
           }
-          // Este es para el error Firebase: Error (auth/invalid-email). Email inválido.
+          // ESTE ES PARA EL ERROR DE FIREBASE: Error (auth/invalid-email). Email inválido.
           default: this.msgError.nativeElement.innerHTML = 'Email inválido';
             break;
         }

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { ServicesService } from '../../services.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import UserFormat from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-view-sing-up',
@@ -22,7 +22,11 @@ export class ViewSingUpComponent implements OnInit {
     @ViewChild('passwordUser') passwordUser!: ElementRef;
     @ViewChild('msgError') msgError!: ElementRef;
     statusModal: boolean = false;
-
+    dataUser: UserFormat = {
+      name: '',
+      nickname: '',
+      id: '',
+    };
 
   ngOnInit(): void {
   }
@@ -45,12 +49,20 @@ export class ViewSingUpComponent implements OnInit {
     const passwordUser = this.passwordUser.nativeElement.value;
     if (emailUser !== '' && nameUser !== '' && nicknameUser !== '' && passwordUser !== '') {
       this.msgError.nativeElement.innerHTML = '';
-      this.service.register(emailUser, passwordUser)
+      this.service.register(emailUser, passwordUser)  //METODO PARA REGISTRAR USUARIO DESDE LOS INPUTS
       .then(response => {
+        this.dataUser = {
+          id: response.user.uid,
+          name: nameUser,
+          nickname: nicknameUser,
+        };
+        this.service.addDataUser(this.dataUser, response.user.uid);
         this.statusModal = true;
       })
       .catch( (error) => {
         const errorMessage = error.message;
+        console.log(errorMessage);
+        
         // CONTROL DE ERRORES PARA MOSTRAR EN EL DOM
         switch (errorMessage) {
           case 'Firebase: Error (auth/email-already-in-use).': {
@@ -75,14 +87,23 @@ export class ViewSingUpComponent implements OnInit {
     }
   }
   
-  returnToLoging() {
+  returnToLoging() { // METODO PARA REGRESAR A LOGIN UNA VEZ TE REGISTRAS
     this.router.navigate(['login']);
   }
 
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE
     this.service.loginWithGoogle()
-    .then(() => this.router.navigate(['/main']))
+    .then((response) => {
+      console.log(response.user, 'RESPONSE');
+      this.dataUser = {
+        id: response.user.uid,
+        name: response.user.displayName!,
+        nickname: response.user.displayName?.substring(0, response.user.displayName.indexOf(' '))!,
+      };
+      
+      this.service.addDataUser(this.dataUser, response.user.uid);
+      this.router.navigate(['/main'])
+  })
     .catch((error)=> console.log(error));
-  }
-
+  };
 }

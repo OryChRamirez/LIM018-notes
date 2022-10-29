@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { ServicesService } from '../../services.service';
 import { Router } from '@angular/router';
+import UserFormat from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-view-login',
@@ -18,17 +19,31 @@ export class ViewLoginComponent implements OnInit {
     @ViewChild('msgError') msgError!: ElementRef;
     @ViewChild('emailUser') emailUser!: ElementRef;
     @ViewChild('passwordUser') passwordUser!: ElementRef;
+    dataUser: UserFormat = {
+      name: '',
+      nickname: '',
+      id: '',
+    };
+    // usersToken
 
   ngOnInit(): void {
   }
 
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE
     this.service.loginWithGoogle()
-    .then(() => this.router.navigate(['/main']))
+    .then((response) => {
+      this.dataUser = {
+        id: response.user.uid,
+        name: response.user.displayName!,
+        nickname: response.user.displayName?.substring(0, response.user.displayName.indexOf(' '))!,
+      };
+      this.service.addDataUser(this.dataUser, response.user.uid);
+      this.router.navigate(['/main'])
+  })
     .catch((error)=> console.log(error));
-  }
+  };
 
-  validationEmail(event: any) {
+  validationEmail(event: any) { //METODO PARA VALIDAR QUE EL EMAIL PUEDA VERIFICARSE
     const condition = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
     const stateCondition = condition.test(event.target.value);
     if(!stateCondition) {
@@ -38,14 +53,19 @@ export class ViewLoginComponent implements OnInit {
       this.msgError.nativeElement.innerHTML = '';
     }
   }
-  onSubmitWithEmailAndPass() {
+  
+  onSubmitWithEmailAndPass() { // METODO PARA INICIAR SESION CON EMAIL Y CONTRASEÑA
     const emailUser: string = this.emailUser.nativeElement.value;
     const passUser: string = this.passwordUser.nativeElement.value;
     if(emailUser !== '' && passUser !== '') {
       this.msgError.nativeElement.innerHTML = '';
       this.service.signInWithEmailAndPass(this.emailUser.nativeElement.value, this.passwordUser.nativeElement.value)
       .then((userCredentials) => {
-        console.log(userCredentials);
+        if(userCredentials.user.emailVerified === true) {
+          this.router.navigate(['/main']);
+        } else {
+          this.msgError.nativeElement.innerHTML = 'Debes verificar tu email para continuar';
+        }
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -58,7 +78,7 @@ export class ViewLoginComponent implements OnInit {
             this.msgError.nativeElement.innerHTML = 'Contraseña incorrecta';
             break;
           }
-          // Este es para el error Firebase: Error (auth/invalid-email). Email inválido.
+          // ESTE ES PARA EL ERROR DE FIREBASE: Error (auth/invalid-email). Email inválido.
           default: this.msgError.nativeElement.innerHTML = 'Email inválido';
             break;
         }
@@ -66,7 +86,7 @@ export class ViewLoginComponent implements OnInit {
     }
   }
 
-  singOutUser() {
+  singOutUser() { //METODO PARA PODER CERRAR SESIÓN
     this.service.singOutUser();
   }
 }

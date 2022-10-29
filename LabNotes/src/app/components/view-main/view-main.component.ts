@@ -10,7 +10,8 @@ export class ViewMainComponent implements OnInit {
 
   constructor(private service: ServicesService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+
   }
 
 }
