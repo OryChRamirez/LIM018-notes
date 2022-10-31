@@ -1,3 +1,31 @@
 <app-header></app-header>
 <app-dropdown-menu></app-dropdown-menu>
-<section></section>
+<section class="contMain">
+    <section class="seccStikyNote" *ngIf="statusNewStickyNote">
+        <div class="contStikyNote">
+            <button class="labelIcon">
+                <span>Asignar etiqueta</span>
+                <i class="bi bi-bookmark"></i>
+            </button>
+                <textarea #titleContent role="textbox" contenteditable class="titleNote" (click)="targetElementTitleNote($event)" maxlength="25">Cosas por hacer...</textarea>
+                <textarea #txtContent role="textbox" contenteditable class="txtNote" (click)="targetElementTxtNote($event)">Comprar pan, comprar café...</textarea>
+        </div>
+        <div class="contFooterOptions">
+            <!-- <button class="labelOption">
+                <i class="bi bi-bookmark"></i>
+            </button>
+            <button class="editOption">
+                <i class="bi bi-pencil"></i>
+            </button> -->
+            <button class="checkOption" (click)="saveNewNote()">
+                <i class="bi bi-check-circle"></i>
+            </button>
+             <button class="closeOption"  (click)="closeCreatedNote()">
+                <i class="bi bi-x-circle"></i>
+            </button>
+            <!-- <button class="deleteOption">
+                <i class="bi bi-x-circle"></i>
+            </button> -->
+        </div>
+    </section>
+</section>

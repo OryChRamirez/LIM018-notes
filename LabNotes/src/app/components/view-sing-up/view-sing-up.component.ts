@@ -56,6 +56,7 @@ export class ViewSingUpComponent implements OnInit {
           name: nameUser,
           nickname: nicknameUser,
         };
+        this.service.sendEmailVerif(response.user)
         this.service.addDataUser(this.dataUser, response.user.uid);
         this.statusModal = true;
       })
@@ -100,9 +101,9 @@ export class ViewSingUpComponent implements OnInit {
         name: response.user.displayName!,
         nickname: response.user.displayName?.substring(0, response.user.displayName.indexOf(' '))!,
       };
-      
+      this.service.$takeData.emit(this.dataUser);
       this.service.addDataUser(this.dataUser, response.user.uid);
-      this.router.navigate(['/main'])
+      this.router.navigate(['/main'], {queryParams: { user: this.dataUser.nickname}});
   })
     .catch((error)=> console.log(error));
   };

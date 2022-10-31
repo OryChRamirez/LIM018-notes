@@ -1,4 +1,7 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import UserFormat from 'src/app/interfaces/user.interface';
+import { ServicesService } from 'src/app/services.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -9,11 +12,23 @@ export class DropdownMenuComponent implements OnInit {
   @ViewChild('seccContDropdownMenu') seccContDropdownMenu!: ElementRef;
   @ViewChild('btnDropdownMenu') btnDropdownMenu!: ElementRef;
   dropdownMenu: boolean = false;
+  dataUser: UserFormat = {
+    name: '',
+    nickname: '',
+    id: '',
+  };
+  nicknameUser: string = '';
 
+  constructor(
+    private renderer: Renderer2,
+    private service: ServicesService,
+    private router: Router,
+    private router2: ActivatedRoute,
+    ) {}
 
-  constructor(private renderer: Renderer2) {}
+  ngOnInit(): void {
 
-  ngOnInit(): void { }
+  }
 
   activeDropdownMenu() {
     if (this.dropdownMenu === true) {
@@ -25,9 +40,12 @@ export class DropdownMenuComponent implements OnInit {
       this.renderer.setStyle(this.btnDropdownMenu.nativeElement, 'align-self', 'flex-end')
       this.renderer.setStyle(this.seccContDropdownMenu.nativeElement, 'width', '10rem');
     }
-    console.log(this.dropdownMenu);
   }
 
   ngAfterViewInit() {
-   }
+    this.router2.queryParams.subscribe((params: any) => {
+      this.nicknameUser = params.user;
+    })
+  }
+
 }

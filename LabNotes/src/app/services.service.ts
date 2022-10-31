@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -7,11 +7,11 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   sendEmailVerification,
-  signOut
+  signOut,
 } from '@angular/fire/auth';
-import { collectionData, Firestore } from '@angular/fire/firestore'
+import { collectionData, Firestore } from '@angular/fire/firestore';
 import UserFormat from 'src/app/interfaces/user.interface';
-import { addDoc, collection, getDoc, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -62,4 +62,9 @@ getDataUser(): Observable<UserFormat[]> { //OBTENER LOS DATOS DE LA BASE PARA MO
   const dbRef = collection(this.firestore, 'dataUser');
   return collectionData(dbRef, { idField: 'id' }) as Observable<UserFormat[]>
 }
+
+$takeData = new EventEmitter<any>();
+$showModelStickyNote = new EventEmitter<any>();
 }
+
+

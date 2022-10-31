@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/co
 import { ServicesService } from '../../services.service';
 import { Router } from '@angular/router';
 import UserFormat from '../../interfaces/user.interface';
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-view-login',
@@ -24,10 +25,10 @@ export class ViewLoginComponent implements OnInit {
       nickname: '',
       id: '',
     };
-    // usersToken
 
   ngOnInit(): void {
-  }
+
+   }
 
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE
     this.service.loginWithGoogle()
@@ -37,10 +38,12 @@ export class ViewLoginComponent implements OnInit {
         name: response.user.displayName!,
         nickname: response.user.displayName?.substring(0, response.user.displayName.indexOf(' '))!,
       };
+      this.service.$takeData.emit(this.dataUser);
       this.service.addDataUser(this.dataUser, response.user.uid);
-      this.router.navigate(['/main'])
+      this.router.navigate(['/main'], {queryParams: { user: this.dataUser.nickname}});
   })
     .catch((error)=> console.log(error));
+    this.service.$takeData.emit
   };
 
   validationEmail(event: any) { //METODO PARA VALIDAR QUE EL EMAIL PUEDA VERIFICARSE
@@ -60,9 +63,15 @@ export class ViewLoginComponent implements OnInit {
     if(emailUser !== '' && passUser !== '') {
       this.msgError.nativeElement.innerHTML = '';
       this.service.signInWithEmailAndPass(this.emailUser.nativeElement.value, this.passwordUser.nativeElement.value)
-      .then((userCredentials) => {
-        if(userCredentials.user.emailVerified === true) {
-          this.router.navigate(['/main']);
+      .then((response) => {
+        if(response.user.emailVerified === true) {
+          this.dataUser = {
+            id: response.user.uid,
+            name: response.user.displayName!,
+            nickname: response.user.displayName?.substring(0, response.user.displayName.indexOf(' '))!,
+          };
+          this.service.$takeData.emit(this.dataUser);
+          this.router.navigate(['/main'], {queryParams: { user: this.dataUser.nickname}});
         } else {
           this.msgError.nativeElement.innerHTML = 'Debes verificar tu email para continuar';
         }

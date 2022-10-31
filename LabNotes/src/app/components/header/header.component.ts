@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../services.service';
 
@@ -9,9 +9,18 @@ import { ServicesService } from '../../services.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private service: ServicesService, private router: Router) { }
+  constructor(
+    private service: ServicesService,
+    private router: Router
+    ) { }
 
+  @ViewChild('createNote') createNote!: ElementRef;
   ngOnInit(): void {
+
+  }
+
+  createStickyNote() {
+    this.service.$showModelStickyNote.emit(true);
   }
 
   signOut() {
