@@ -8,7 +8,7 @@
 .contdropdownMenu {
     display: flex;
     flex-direction: column;
-    width: 3.5rem;
+    width: max-content;
     height: 100vh;
     background-color: #d9d9d9;
     align-items: center;
@@ -30,7 +30,48 @@
     font-size: 1rem;
 }
 
-
 .bi {
     font-size: xx-large;
 }
+
+.labelList, .labelListVoid {
+    padding: .2rem;
+}
+
+.labelList {
+    display: flex;
+    border-top: 0.13rem dotted;
+    width: 100%;
+    flex-direction: column;
+    font-family: 'Libre Baskerville', serif;
+    font-size: small;
+    align-items: center;
+    text-align: center;
+}
+
+.labelList > span {
+    display: flex;
+    width: 100%;
+    text-justify: center;
+    margin: 0.3rem;
+    align-items: center;
+    background-color: yellow;
+}
+
+.bi-three-dots-vertical, .bi-caret-right-fill{
+    display: flex;
+    font-size: medium;
+}
+
+.bi-three-dots-vertical {
+    justify-self: flex-end;
+}
+
+.labelListVoid > span {
+    display: flex;
+    font-family: 'Libre Baskerville', serif;
+    font-style: oblique;
+    font-size: small;
+    color: gray; 
+}
+

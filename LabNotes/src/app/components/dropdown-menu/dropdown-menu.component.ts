@@ -11,14 +11,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DropdownMenuComponent implements OnInit {
   @ViewChild('seccContDropdownMenu') seccContDropdownMenu!: ElementRef;
   @ViewChild('btnDropdownMenu') btnDropdownMenu!: ElementRef;
-  dropdownMenu: boolean = false;
+  dropdownMenu: boolean = true;
   dataUser: UserFormat = {
     name: '',
     nickname: '',
     id: '',
   };
   nicknameUser: string = '';
-  listOfLabels: Array<string> = [];
+  listOfLabels: Array<string> = ['hola'];
 
   constructor(
     private renderer: Renderer2,
@@ -43,11 +43,11 @@ export class DropdownMenuComponent implements OnInit {
     if (this.dropdownMenu === true) {
       this.dropdownMenu = false;
       this.renderer.setStyle(this.btnDropdownMenu.nativeElement, 'align-self', 'center')
-      this.renderer.setStyle(this.seccContDropdownMenu.nativeElement, 'width', '3.5rem');
+      this.renderer.setStyle(this.seccContDropdownMenu.nativeElement, 'width', 'max-content');
     } else {
       this.dropdownMenu = true;
       this.renderer.setStyle(this.btnDropdownMenu.nativeElement, 'align-self', 'flex-end')
-      this.renderer.setStyle(this.seccContDropdownMenu.nativeElement, 'width', '10rem');
+      this.renderer.setStyle(this.seccContDropdownMenu.nativeElement, 'width', 'max-content');
     }
   }
 

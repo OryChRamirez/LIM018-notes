@@ -1,5 +1,5 @@
 <section class="seccFormRegister">
-  <div class="contForm" *ngIf="!statusModal">
+  <div class="contForm" *ngIf="!statusModal; else statusModalTrue">
     <p>Registrate</p>
     <div class="logo">
       <div class="firstLogo">
@@ -53,7 +53,7 @@
       </div>
     </form>
   </div>
-  <ng-template [ngIf]="statusModal">
+  <ng-template #statusModalTrue>
     <div class="contModalConfirm">
       <div class="contIconCheck"><i class="bi bi-check-circle"></i></div>
       <h3 class="txtConfirm">Verifica tu correo</h3>

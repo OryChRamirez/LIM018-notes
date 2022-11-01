@@ -27,10 +27,15 @@
           <span *ngIf="this.dropdownMenu">Etiquetas</span>
         </button>
       </li>
-      <div class="labelList" *ngIf="listOfLabels[0] === undefined">
-        <!-- <span *ngIf="this.dropdownMenu"><i class="bi bi-caret-right-fill"></i>No hay etiquetas</span> -->
+      <div class="labelListVoid" *ngIf="listOfLabels[0] === undefined; else listOfLabelsTemplate">
         <span *ngIf="this.dropdownMenu">No hay etiquetas</span>
       </div>
+      <ng-template #listOfLabelsTemplate>
+        <div class="labelList">
+          <span *ngIf="this.dropdownMenu"><i class="bi bi-caret-right-fill"></i>EETA<i class="bi bi-three-dots-vertical"></i></span>
+          <span *ngIf="this.dropdownMenu"><i class="bi bi-caret-right-fill"></i>ETIA<i class="bi bi-three-dots-vertical"></i></span>
+        </div>
+      </ng-template>
     <div>
       <hr class="hr" />
     </div>
