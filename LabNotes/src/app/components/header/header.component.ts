@@ -14,9 +14,16 @@ export class HeaderComponent implements OnInit {
     private router: Router
     ) { }
 
-  @ViewChild('createNote') createNote!: ElementRef;
+  statusAsignLabel: boolean = false;
+
   ngOnInit(): void {
 
+  }
+
+  showModalLabels() {
+    this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
+    console.log(this.statusAsignLabel);
+    
   }
 
   createStickyNote() {

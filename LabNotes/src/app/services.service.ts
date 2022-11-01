@@ -39,7 +39,6 @@ export class ServicesService {
   }
 
   resetPassword(email: string) { // FUNCIÓN PARA ENVIAR EMAIL DE RECUPERACIÓN DE CONTRASEÑA
-    console.log(this.auth);
     return sendPasswordResetEmail(this.auth, email);
   }
 
@@ -63,6 +62,9 @@ getDataUser(): Observable<UserFormat[]> { //OBTENER LOS DATOS DE LA BASE PARA MO
   return collectionData(dbRef, { idField: 'id' }) as Observable<UserFormat[]>
 }
 
+getCurrUser() {
+  return this.auth.currentUser?.uid;
+}
 $takeData = new EventEmitter<any>();
 $showModelStickyNote = new EventEmitter<any>();
 }

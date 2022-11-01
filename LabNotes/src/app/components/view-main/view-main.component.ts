@@ -20,13 +20,13 @@ export class ViewMainComponent implements OnInit {
     ) { }
     @ViewChild('titleContent') titleContent!: ElementRef;
     @ViewChild('txtContent') txtContent!: ElementRef;
-    statusNewStickyNote: boolean = true;
+    statusNewStickyNote: boolean = false;
+    statusAsignLabel: boolean = false;
 
   ngOnInit(): void {
     this.service.$showModelStickyNote.subscribe((valor) => {
       this.statusNewStickyNote = valor;
     });
-
     this.service.$takeData.subscribe((currUser) => {
       this.dataUser = {
         id: currUser.id,
@@ -54,11 +54,16 @@ export class ViewMainComponent implements OnInit {
     }
   }
 
+  selectLabel() {
+    this.statusAsignLabel = true;
+  }
   saveNewNote() {
+    this.statusAsignLabel = false;
     this.statusNewStickyNote = false;
   }
 
   closeCreatedNote() {
+    this.statusAsignLabel = false;
     this.statusNewStickyNote = false;
   }
 

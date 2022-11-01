@@ -20,15 +20,14 @@ export class ViewLoginComponent implements OnInit {
     @ViewChild('msgError') msgError!: ElementRef;
     @ViewChild('emailUser') emailUser!: ElementRef;
     @ViewChild('passwordUser') passwordUser!: ElementRef;
+    statusUser: boolean = false;
     dataUser: UserFormat = {
       name: '',
       nickname: '',
       id: '',
     };
 
-  ngOnInit(): void {
-
-   }
+  ngOnInit(): void { }
 
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE
     this.service.loginWithGoogle()

@@ -25,8 +25,12 @@
       <button type="button" class="btnGeneral btnContLabels">
           <i class="bi bi-bookmark"></i>
           <span *ngIf="this.dropdownMenu">Etiquetas</span>
-      </button>
-    </li>
+        </button>
+      </li>
+      <div class="labelList" *ngIf="listOfLabels[0] === undefined">
+        <!-- <span *ngIf="this.dropdownMenu"><i class="bi bi-caret-right-fill"></i>No hay etiquetas</span> -->
+        <span *ngIf="this.dropdownMenu">No hay etiquetas</span>
+      </div>
     <div>
       <hr class="hr" />
     </div>

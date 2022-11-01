@@ -61,9 +61,7 @@ export class ViewSingUpComponent implements OnInit {
         this.statusModal = true;
       })
       .catch( (error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        
+        const errorMessage = error.message;     
         // CONTROL DE ERRORES PARA MOSTRAR EN EL DOM
         switch (errorMessage) {
           case 'Firebase: Error (auth/email-already-in-use).': {
@@ -95,7 +93,6 @@ export class ViewSingUpComponent implements OnInit {
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE
     this.service.loginWithGoogle()
     .then((response) => {
-      console.log(response.user, 'RESPONSE');
       this.dataUser = {
         id: response.user.uid,
         name: response.user.displayName!,

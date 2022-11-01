@@ -9,9 +9,21 @@
     </div>
   </div>
   <div class="contBtnsCenter">
-    <button #createNote type="button" class="btnGeneral"><i class="bi bi-file-earmark-plus" (click)="createStickyNote()"></i></button>
-    <button type="button" class="btnGeneral"><i class="bi bi-bookmark" ></i></button>
+    <button type="button" class="btnGeneral" (click)="createStickyNote()"><i class="bi bi-file-earmark-plus"></i></button>
+    <button type="button" class="btnGeneral" (click)="showModalLabels()"><i class="bi bi-bookmark"></i></button>
   </div>
+  <div class="contLabels" *ngIf="statusAsignLabel">
+    <button class="labels color1">
+        <p>CASA</p>
+    </button>
+    <button class="labels color2">
+        <P>TRABAJO</P>
+    </button>
+    <button class="labels color3">
+        <P>COLE</P>
+    </button>
+</div>
+
   <div class="contBtnLogOut">
     <button type="button" class="btnGeneral" (click)="signOut()"><i class="bi bi-box-arrow-right" ></i></button>
 </div>

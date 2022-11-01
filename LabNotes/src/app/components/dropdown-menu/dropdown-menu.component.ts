@@ -18,6 +18,7 @@ export class DropdownMenuComponent implements OnInit {
     id: '',
   };
   nicknameUser: string = '';
+  listOfLabels: Array<string> = [];
 
   constructor(
     private renderer: Renderer2,
@@ -27,7 +28,15 @@ export class DropdownMenuComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-
+  this.service.getDataUser().forEach((users) => {
+    users.forEach((user) => {
+      if(user.id === this.service.getCurrUser()) {
+        this.nicknameUser = user.nickname;
+      };
+    });
+  });
+  console.log(this.listOfLabels[0]);
+  
   }
 
   activeDropdownMenu() {
@@ -42,10 +51,6 @@ export class DropdownMenuComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    this.router2.queryParams.subscribe((params: any) => {
-      this.nicknameUser = params.user;
-    })
-  }
+  ngAfterViewInit() { }
 
 }

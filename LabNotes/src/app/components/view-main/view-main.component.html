@@ -3,10 +3,21 @@
 <section class="contMain">
     <section class="seccStikyNote" *ngIf="statusNewStickyNote">
         <div class="contStikyNote">
-            <button class="labelIcon">
+            <button class="labelIcon" (click)="selectLabel()">
                 <span>Asignar etiqueta</span>
                 <i class="bi bi-bookmark"></i>
             </button>
+            <div class="contLabels" *ngIf="statusAsignLabel">
+                <button class="labels color1">
+                    <p>CASA</p>
+                </button>
+                <button class="labels color2">
+                    <P>TRABAJO</P>
+                </button>
+                <button class="labels color3">
+                    <P>COLE</P>
+                </button>
+            </div>
                 <textarea #titleContent role="textbox" contenteditable class="titleNote" (click)="targetElementTitleNote($event)" maxlength="25">Cosas por hacer...</textarea>
                 <textarea #txtContent role="textbox" contenteditable class="txtNote" (click)="targetElementTxtNote($event)">Comprar pan, comprar café...</textarea>
         </div>
