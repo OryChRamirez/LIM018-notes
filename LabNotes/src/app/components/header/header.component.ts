@@ -23,15 +23,19 @@ export class HeaderComponent implements OnInit {
   showModalLabels() {
     this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
     console.log(this.statusAsignLabel);
+    this.service.$showModelStickyNote.emit(false);
     
   }
 
   createStickyNote() {
+    this.statusAsignLabel = false;
     this.service.$showModelStickyNote.emit(true);
   }
 
   signOut() {
-    this.service.singOutUser();
-    this.router.navigate(['/login']);
+    this.service.singOutUser()
+    .then(() => this.router.navigate(['/login']));
   }
+
+  ngAferViewInit () {  }
 }

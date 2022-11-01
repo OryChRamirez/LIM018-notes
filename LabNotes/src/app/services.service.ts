@@ -11,13 +11,14 @@ import {
 } from '@angular/fire/auth';
 import { collectionData, Firestore } from '@angular/fire/firestore';
 import UserFormat from 'src/app/interfaces/user.interface';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicesService {
+  Router: any;
 
 
   constructor(
@@ -62,9 +63,15 @@ getDataUser(): Observable<UserFormat[]> { //OBTENER LOS DATOS DE LA BASE PARA MO
   return collectionData(dbRef, { idField: 'id' }) as Observable<UserFormat[]>
 }
 
-getCurrUser() {
+getCurrUser() { // OBTIENE EL USUARIO LOGUEADO ACTUALMENTE
   return this.auth.currentUser?.uid;
 }
+
+changeNicknameOrName(currUser: any, newValor:string) {
+  const orderRef = doc(this.firestore, `dataUser/${currUser}`);
+  return updateDoc(orderRef, {nickname: newValor})
+} 
+
 $takeData = new EventEmitter<any>();
 $showModelStickyNote = new EventEmitter<any>();
 }

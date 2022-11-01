@@ -11,20 +11,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DropdownMenuComponent implements OnInit {
   @ViewChild('seccContDropdownMenu') seccContDropdownMenu!: ElementRef;
   @ViewChild('btnDropdownMenu') btnDropdownMenu!: ElementRef;
-  dropdownMenu: boolean = true;
+  @ViewChild('labelListStyle') labelListStyle!: ElementRef;
+  @ViewChild('changeNicknameUser') changeNicknameUser!: ElementRef;
+  @ViewChild('btnEditLabelName') btnEditLabelName!: ElementRef;
+  dropdownMenu: boolean = false;
+  optionsEditAndDeleteLabels: boolean = false;
+  modalChangeNameUser: boolean = false;
+  currUser: any = this.service.getCurrUser();
   dataUser: UserFormat = {
     name: '',
     nickname: '',
     id: '',
   };
   nicknameUser: string = '';
-  listOfLabels: Array<string> = ['hola'];
+  listOfLabels: Array<string> = ['1'];
 
   constructor(
     private renderer: Renderer2,
     private service: ServicesService,
-    private router: Router,
-    private router2: ActivatedRoute,
     ) {}
 
   ngOnInit(): void {
@@ -44,13 +48,45 @@ export class DropdownMenuComponent implements OnInit {
       this.dropdownMenu = false;
       this.renderer.setStyle(this.btnDropdownMenu.nativeElement, 'align-self', 'center')
       this.renderer.setStyle(this.seccContDropdownMenu.nativeElement, 'width', 'max-content');
+      this.renderer.setStyle(this.labelListStyle.nativeElement, 'border-top', 'none');
     } else {
       this.dropdownMenu = true;
       this.renderer.setStyle(this.btnDropdownMenu.nativeElement, 'align-self', 'flex-end')
       this.renderer.setStyle(this.seccContDropdownMenu.nativeElement, 'width', 'max-content');
+      this.renderer.setStyle(this.labelListStyle.nativeElement, 'border-top', ' 0.1rem dotted');
     }
   }
 
-  ngAfterViewInit() { }
+  activeOptionsLabels() {
+    if(this.optionsEditAndDeleteLabels === true) {
+      this.optionsEditAndDeleteLabels = false;
+    } else {
+      this.optionsEditAndDeleteLabels = true;
+    }
+  }
 
+  showModalChangeNickname() {
+    if(this.modalChangeNameUser === true) {
+      this.modalChangeNameUser = false;
+    } else {
+      this.modalChangeNameUser = true;
+    }
+  }
+
+  targetElementNickname(event: any) {
+    this.changeNicknameUser.nativeElement.value = '';
+  }
+
+  async changeNickname() {
+  let nickname = this.changeNicknameUser.nativeElement.value; 
+  if(nickname === '') {
+     nickname = this.nicknameUser;
+  }
+  const response = await this.service.changeNicknameOrName(this.currUser, nickname);
+  this.modalChangeNameUser = false;
+  }
+  
+  closeModalChangeNickname() {
+    this.modalChangeNameUser = false;
+  }
 }

@@ -13,13 +13,17 @@
     <button type="button" class="btnGeneral" (click)="showModalLabels()"><i class="bi bi-bookmark"></i></button>
   </div>
   <div class="contLabels" *ngIf="statusAsignLabel">
-    <button class="labels color1">
-        <p>CASA</p>
+    <button type="button" class="addLabel labels" (click)="showModalLabels()"><i class="bi bi-bookmark-plus"></i>Agregar</button>
+    <button class="labels ">
+      <i class="bi bi-caret-right-fill color1"></i>
+        <p>CASAAAAAAAAAA</p>
     </button>
-    <button class="labels color2">
+    <button class="labels">
+      <i class="bi bi-caret-right-fill color2"></i>
         <P>TRABAJO</P>
     </button>
-    <button class="labels color3">
+    <button class="labels">
+      <i class="bi bi-caret-right-fill color3"></i>
         <P>COLE</P>
     </button>
 </div>

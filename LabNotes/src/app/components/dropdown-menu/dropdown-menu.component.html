@@ -4,10 +4,18 @@
   </button>
   <ul class="ulList">
     <li>
-      <button type="button" class="btnGeneral btnContUser">
+      <button type="button" class="btnGeneral btnContUser" (click)="showModalChangeNickname()">
         <i class="bi bi-person-circle"></i>
         <span *ngIf="this.dropdownMenu">{{ nicknameUser }}</span>
       </button>
+      <div class="modalEditNickname" *ngIf="modalChangeNameUser">
+        <h3>Editar Nick:</h3>
+        <textarea #changeNicknameUser role="textbox" contenteditable class="nameUser" maxlength="20" (click)="targetElementNickname($event)">{{ nicknameUser }}</textarea>
+        <div class="contBtnSaveOrCancelModal">
+          <button class="btnsSaveOrCancelNickname" (click)="changeNickname()" >Guardar</button>
+          <button class="btnsSaveOrCancelNickname" (click)="closeModalChangeNickname()">Cancelar</button>
+        </div>
+      </div>
     </li>
     <div>
       <hr class="hr" />
@@ -22,18 +30,24 @@
       <hr class="hr" />
     </div>
     <li>
-      <button type="button" class="btnGeneral btnContLabels">
+      <button type="button" class="btnGeneral btnContLabels" >
           <i class="bi bi-bookmark"></i>
           <span *ngIf="this.dropdownMenu">Etiquetas</span>
         </button>
+        <div #labelListStyle class="hrDotter"></div>
       </li>
       <div class="labelListVoid" *ngIf="listOfLabels[0] === undefined; else listOfLabelsTemplate">
         <span *ngIf="this.dropdownMenu">No hay etiquetas</span>
       </div>
       <ng-template #listOfLabelsTemplate>
         <div class="labelList">
-          <span *ngIf="this.dropdownMenu"><i class="bi bi-caret-right-fill"></i>EETA<i class="bi bi-three-dots-vertical"></i></span>
-          <span *ngIf="this.dropdownMenu"><i class="bi bi-caret-right-fill"></i>ETIA<i class="bi bi-three-dots-vertical"></i></span>
+          <span *ngIf="this.dropdownMenu">
+            <i class="bi bi-caret-right-fill"></i>EETA<i class="bi bi-three-dots-vertical" (click)="activeOptionsLabels()"></i>
+          </span>
+          <ul class="contBtnsEditAndDeleteLabels" *ngIf="optionsEditAndDeleteLabels">
+            <li><button  type="button" class="menuThreeDotsLabels">Editar</button></li>
+            <li><button type="button" class="menuThreeDotsLabels">Eliminar</button></li>
+        </ul>
         </div>
       </ng-template>
     <div>

@@ -32,6 +32,7 @@ export class ViewLoginComponent implements OnInit {
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE
     this.service.loginWithGoogle()
     .then((response) => {
+      localStorage.clear();
       this.dataUser = {
         id: response.user.uid,
         name: response.user.displayName!,
@@ -63,6 +64,7 @@ export class ViewLoginComponent implements OnInit {
       this.msgError.nativeElement.innerHTML = '';
       this.service.signInWithEmailAndPass(this.emailUser.nativeElement.value, this.passwordUser.nativeElement.value)
       .then((response) => {
+        localStorage.clear();
         if(response.user.emailVerified === true) {
           this.dataUser = {
             id: response.user.uid,

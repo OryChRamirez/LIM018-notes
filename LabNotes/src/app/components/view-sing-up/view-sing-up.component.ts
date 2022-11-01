@@ -28,8 +28,7 @@ export class ViewSingUpComponent implements OnInit {
       id: '',
     };
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   validationEmail(event: any) {
     const condition = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
@@ -87,12 +86,13 @@ export class ViewSingUpComponent implements OnInit {
   }
   
   returnToLoging() { // METODO PARA REGRESAR A LOGIN UNA VEZ TE REGISTRAS
-    this.router.navigate(['login']);
+    this.router.navigate(['/login']);
   }
 
   onSubmitGoogle() { //REGISTRO DE USUARIO CON GOOGLE
     this.service.loginWithGoogle()
     .then((response) => {
+      localStorage.clear();
       this.dataUser = {
         id: response.user.uid,
         name: response.user.displayName!,
@@ -100,7 +100,7 @@ export class ViewSingUpComponent implements OnInit {
       };
       this.service.$takeData.emit(this.dataUser);
       this.service.addDataUser(this.dataUser, response.user.uid);
-      this.router.navigate(['/main'], {queryParams: { user: this.dataUser.nickname}});
+      this.router.navigate(['/main']);
   })
     .catch((error)=> console.log(error));
   };

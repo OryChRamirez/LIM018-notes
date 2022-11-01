@@ -7,7 +7,7 @@ import { canActivate, redirectUnauthorizedTo, redirectLoggedInTo } from '@angula
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 
 const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: '/main' },
+    { path: '', pathMatch: 'full', redirectTo: '/login' },
     { path: 'sing-in', component: ViewSingUpComponent,
       ...canActivate(() => redirectLoggedInTo(['/main']))
     },
@@ -16,7 +16,7 @@ const routes: Routes = [
     { 
       path: 'main',
      component: ViewMainComponent,
-      ...canActivate(()=> redirectUnauthorizedTo(['/sing-in']))
+      ...canActivate(()=> redirectUnauthorizedTo(['/login']))
     },
     { path: 'forgert-password', component: ForgetPasswordComponent}
 ];

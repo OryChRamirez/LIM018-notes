@@ -67,14 +67,27 @@
     display: flex;
     background: none;
     border: 0;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     margin: 0.2rem 0;
     font-family: 'Libre Baskerville', serif;
     font-weight: bold;
+    font-size: small;
     border-radius: 0.3rem;
     color: white;
     align-items: center;
-    justify-content: center;
+    width: 100%;
+    gap: 0.2rem;
+    align-content: center;
+}
+
+.labels > .bi-caret-right-fill {
+    font-size: small;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+}
+
+.bi-bookmark-plus {
+    font-size: medium;
 }
 
 .contLabels {
@@ -83,6 +96,7 @@
     flex-direction: column;
     width: max-content;
     height: auto;
+    align-items: center;
     padding: 0 0.3rem;
     top: 3.6rem;
     left: 50%;
@@ -91,6 +105,15 @@
     border-radius: 0.5rem;
 }
 
+.addLabel {
+    color: #000;
+    border-bottom: 0.1rem dotted;
+    border-radius: 0;
+}
+
+.labels > p {
+    color: #000;
+}
 .color1 {
     background-color: rgb(255, 0, 0, 0.7);
 }
