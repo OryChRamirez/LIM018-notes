@@ -78,16 +78,42 @@
           </span>
           <ul class="contBtnsEditAndDeleteLabels">
             <li>
-              <button type="button" class="editAndDelete" (click)="editLabelById(arrLabelsByUser.indexOf(label))">
+              <button type="button" class="editAndDelete" (click)="editLabelById(label.id)">
                 <i class="bi bi-pencil editAndDelete"></i>
               </button>
             </li>
             <li>
-              <button type="button" class="editAndDelete" (click)="deleteLabelById(arrLabelsByUser.indexOf(label))">
+              <button type="button" class="editAndDelete" (click)="deleteLabelById(label.id)">
                 <i class="bi bi-x-circle editAndDelete"></i>
               </button>
             </li>
           </ul>
+        </div>
+      </div>
+      <div class="modalCreateLabel" *ngIf="modalNewLabel">
+        <h3>Nueva Etiqueta:</h3>
+        <textarea
+          #labelName
+          role="textbox"
+          contenteditable
+          class="labelName"
+          maxlength="20"
+          (click)="targetElementnewLabel($event)"
+        >
+    Ejemplo...</textarea
+        >
+        <p #msgError class="msgError"></p>
+        <div class="contColor">
+          <h3>Color:</h3>
+          <input #inputColor type="color" />
+        </div>
+        <div class="contBtnSaveOrCancelModal">
+          <button class="btnsSaveOrCancelNickname" (click)="saveNewLabel()">
+            Guardar
+          </button>
+          <button class="btnsSaveOrCancelNickname" (click)="closeModalNewLabel()">
+            Cancelar
+          </button>
         </div>
       </div>
     </ng-template>

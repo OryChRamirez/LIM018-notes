@@ -4,6 +4,7 @@ import { ServicesService } from '../../services.service';
 import labelFormat from '../../interfaces/labels.interface';
 import { collection, query, where } from 'firebase/firestore';
 import { collectionData, Firestore } from '@angular/fire/firestore';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,6 @@ export class HeaderComponent implements OnInit {
   constructor(
     private service: ServicesService,
     private router: Router,
-    private firestore: Firestore    
     ) { }
 
   currUser = this.service.getCurrUser();
@@ -31,13 +31,12 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('labelName') labelName!: ElementRef;
   @ViewChild('inputColor') inputColor!: ElementRef;
+  @ViewChild('msgError') msgError!: ElementRef;
 
   ngOnInit(): void {   
     this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
       this.arrLabelsByUser = valor;
-      console.log(valor);
     });
-    // console.log(this.service.getDataLabelsByUser(this.currUser!).stateChanges());    
   }
 
 
@@ -72,9 +71,14 @@ export class HeaderComponent implements OnInit {
       nameLabel: label,
       colorLabel: color,
         }
-    this.service.addDataLabels(this.newLabel);
-    console.log(color, ' ', label, ' ', idUser);
-    this.modalNewLabel = false;
+      const labelExist = this.arrLabelsByUser.find((labelData) => labelData.nameLabel === label);
+      if(labelExist !== undefined) {
+        this.msgError.nativeElement.innerHTML = 'Elige otro nombre para la etiqueta'
+      } else {
+        this.msgError.nativeElement.innerHTML = ''
+        this.service.addDataLabels(this.newLabel);
+        this.modalNewLabel = false;
+      }
   }
 
   closeModalNewLabel() {
@@ -83,8 +87,5 @@ export class HeaderComponent implements OnInit {
 
   targetElementnewLabel(event: any) {
     this.labelName.nativeElement.value = '';
-  }
-  ngAferViewInit () {
-
   }
 }

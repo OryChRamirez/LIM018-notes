@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import UserFormat from 'src/app/interfaces/user.interface';
 import { ServicesService } from 'src/app/services.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import labelFormat from 'src/app/interfaces/labels.interface';
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -14,9 +14,14 @@ export class DropdownMenuComponent implements OnInit {
   @ViewChild('labelListStyle') labelListStyle!: ElementRef;
   @ViewChild('changeNicknameUser') changeNicknameUser!: ElementRef;
   @ViewChild('btnEditLabelName') btnEditLabelName!: ElementRef;
+  @ViewChild('labelName') labelName!: ElementRef;
+  @ViewChild('inputColor') inputColor!: ElementRef;
+
   dropdownMenu: boolean = true;
   optionsEditAndDeleteLabels: boolean = false;
   modalChangeNameUser: boolean = false;
+  statusAsignLabel: boolean = false;
+  modalNewLabel: boolean = false;
   currUser: any = this.service.getCurrUser();
   arrLabelsByUser: Array<any> = [];
   dataUser: UserFormat = {
@@ -24,6 +29,11 @@ export class DropdownMenuComponent implements OnInit {
     nickname: '',
     id: '',
   };
+  newLabel: labelFormat = {
+    idUser: '',
+    nameLabel: '',
+    colorLabel: '',
+  }
   nicknameUser!: string;
 
   constructor(
@@ -32,9 +42,9 @@ export class DropdownMenuComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    // this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
-    //   this.arrLabelsByUser = valor;
-    // });
+    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
+      this.arrLabelsByUser = valor;
+    });
     
     this.service.$showModalChangeNickname.subscribe((valor) => {
       this.modalChangeNameUser = valor;
@@ -95,11 +105,34 @@ export class DropdownMenuComponent implements OnInit {
   }
 
   editLabelById(idLabel: number) {
+    this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
+    this.modalNewLabel = true;
+
+  }
+
+  
+  deleteLabelById(idLabel: number) {
     console.log(idLabel);
   }
 
-  deleteLabelById(idLabel: number) {
-    console.log(idLabel);
-    
+
+  saveNewLabel() {
+    const color = this.inputColor.nativeElement.value;
+    const label = this.labelName.nativeElement.value;
+    const idUser = this.currUser;
+    this.newLabel = {
+      idUser: idUser!,
+      nameLabel: label,
+      colorLabel: color,
+        }
   }
+
+  closeModalNewLabel() {
+    this.modalNewLabel = false;
+  }
+
+  targetElementnewLabel(event: any) {
+    this.labelName.nativeElement.value = '';
+  }
+
 }

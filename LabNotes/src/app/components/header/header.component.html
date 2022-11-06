@@ -1,4 +1,3 @@
-
 <section class="contHeader">
   <div class="logo">
     <div class="firstLogo">
@@ -9,32 +8,56 @@
     </div>
   </div>
   <div class="contBtnsCenter">
-    <button type="button" class="btnGeneral" (click)="createStickyNote()"><i class="bi bi-file-earmark-plus"></i></button>
-    <button type="button" class="btnGeneral" (click)="showModalLabels()"><i class="bi bi-bookmark"></i></button>
+    <button type="button" class="btnGeneral" (click)="createStickyNote()">
+      <i class="bi bi-file-earmark-plus"></i>
+    </button>
+    <button type="button" class="btnGeneral" (click)="showModalLabels()">
+      <i class="bi bi-bookmark"></i>
+    </button>
   </div>
   <div class="contLabels" *ngIf="statusAsignLabel">
-    <button type="button" class="addLabel labels" (click)="showModalNewLabel()"><i class="bi bi-bookmark-plus"></i>Agregar</button>
+    <button type="button" class="addLabel labels" (click)="showModalNewLabel()">
+      <i class="bi bi-bookmark-plus"></i>Agregar
+    </button>
     <div class="contLabelsCreated" *ngFor="let label of arrLabelsByUser">
       <button class="labels">
-        <i class="bi bi-caret-right-fill color1" [ngStyle]="{'background-color': label.colorLabel}" ></i>
-          <p>{{label.nameLabel}}</p>
+        <i
+          class="bi bi-caret-right-fill color1"
+          [ngStyle]="{ 'background-color': label.colorLabel }"
+        ></i>
+        <p>{{ label.nameLabel }}</p>
       </button>
     </div>
-</div>
+  </div>
   <div class="contBtnLogOut">
-    <button type="button" class="btnGeneral" (click)="signOut()"><i class="bi bi-box-arrow-right" ></i></button>
-</div>
-<div class="modalCreateLabel" *ngIf="modalNewLabel">
-  <h3>Nueva Etiqueta:</h3>
-  <textarea #labelName role="textbox" contenteditable class="labelName" maxlength="20" (click)="targetElementnewLabel($event)">Ejemplo...</textarea>
-  <p #msgError class="msgError"></p>
-  <div class="contColor">
-    <h3>Color:</h3>
-    <input #inputColor type="color">
+    <button type="button" class="btnGeneral" (click)="signOut()">
+      <i class="bi bi-box-arrow-right"></i>
+    </button>
   </div>
-  <div class="contBtnSaveOrCancelModal">
-    <button class="btnsSaveOrCancelNickname" (click)="saveNewLabel()">Guardar</button>
-    <button class="btnsSaveOrCancelNickname" (click)="closeModalNewLabel()">Cancelar</button>
+  <div class="modalCreateLabel" *ngIf="modalNewLabel">
+    <h3>Nueva Etiqueta:</h3>
+    <textarea
+      #labelName
+      role="textbox"
+      contenteditable
+      class="labelName"
+      maxlength="13"
+      (click)="targetElementnewLabel($event)"
+    >
+Ejemplo...</textarea
+    >
+    <p #msgError class="msgError"></p>
+    <div class="contColor">
+      <h3>Color:</h3>
+      <input #inputColor type="color" />
+    </div>
+    <div class="contBtnSaveOrCancelModal">
+      <button class="btnsSaveOrCancelNickname" (click)="saveNewLabel()">
+        Guardar
+      </button>
+      <button class="btnsSaveOrCancelNickname" (click)="closeModalNewLabel()">
+        Cancelar
+      </button>
+    </div>
   </div>
-</div>
 </section>

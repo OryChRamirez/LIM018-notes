@@ -120,17 +120,7 @@
 .labels > p {
     color: #000;
 }
-.color1 {
-    background-color: rgb(255, 0, 0, 0.7);
-}
 
-.color2 {
-    background-color: rgb(128, 0, 128, 0.7);
-}
-
-.color3 {
-    background-color: rgb(34, 139, 34, 0.7);
-}
 /* ------------- MODAL EDITAR NICK DE USUARIO  ------------- */
 
 .modalCreateLabel {
@@ -163,7 +153,7 @@
     padding: 0.7rem 0.3rem;
 }
 
-.nameUser:focus {
+.labelName:focus {
     outline: 0;
 }
 
@@ -196,3 +186,12 @@
     color: red;
     font-weight: 700;
   }
+
+  /* 
+  modalCreateLabel
+  labelName
+  msgError
+  contColor
+  contBtnSaveOrCancelModal
+  btnsSaveOrCancelNickname
+   */

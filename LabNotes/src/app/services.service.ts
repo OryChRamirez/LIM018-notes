@@ -15,6 +15,7 @@ import { addDoc, collection, doc, setDoc, updateDoc, where } from 'firebase/fire
 import { Observable } from 'rxjs';
 import labelFormat from './interfaces/labels.interface';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { idToken } from '@angular/fire/auth';
 
 
 @Injectable({
@@ -81,10 +82,16 @@ addDataLabels(label: labelFormat) {
   return addDoc(dbRef, label);
 }
 
-
 getDataLabelsByUser(idUser: string) {
-  const dbRef = this.of.collection('dataLabels', ref => ref.where('idUser', '==', idUser));
-  return dbRef.valueChanges();
+  const dbRef = this.of.collection('dataLabels', ref => ref.where('idUser', '==', idUser)); 
+  return dbRef.valueChanges({ idField: 'id' });
+}
+
+updateLabel(idLabel: string, newNameLabel: string, newColorLabel: string) {
+  return this.of.collection('dataLabels').doc(idLabel).update({
+    nameLabel: newNameLabel,
+    colorLabel: newColorLabel,
+  })
 }
 
 $takeData = new EventEmitter<any>();
