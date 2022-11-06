@@ -14,18 +14,12 @@
   </div>
   <div class="contLabels" *ngIf="statusAsignLabel">
     <button type="button" class="addLabel labels" (click)="showModalNewLabel()"><i class="bi bi-bookmark-plus"></i>Agregar</button>
-    <button class="labels ">
-      <i class="bi bi-caret-right-fill color1"></i>
-        <p>CASAAAAAAAAAA</p>
-    </button>
-    <button class="labels">
-      <i class="bi bi-caret-right-fill color2"></i>
-        <P>TRABAJO</P>
-    </button>
-    <button class="labels">
-      <i class="bi bi-caret-right-fill color3"></i>
-        <P>COLE</P>
-    </button>
+    <div class="contLabelsCreated" *ngFor="let label of arrLabelsByUser">
+      <button class="labels">
+        <i class="bi bi-caret-right-fill color1" [ngStyle]="{'background-color': label.colorLabel}" ></i>
+          <p>{{label.nameLabel}}</p>
+      </button>
+    </div>
 </div>
   <div class="contBtnLogOut">
     <button type="button" class="btnGeneral" (click)="signOut()"><i class="bi bi-box-arrow-right" ></i></button>

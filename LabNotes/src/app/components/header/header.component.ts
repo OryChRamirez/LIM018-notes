@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../services.service';
 import labelFormat from '../../interfaces/labels.interface';
+import { collection, query, where } from 'firebase/firestore';
+import { collectionData, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-header',
@@ -12,29 +14,32 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private service: ServicesService,
-    private router: Router
+    private router: Router,
+    private firestore: Firestore    
     ) { }
 
   currUser = this.service.getCurrUser();
   statusAsignLabel: boolean = false;
-  modalNewLabel: boolean = true;
+  modalNewLabel: boolean = false;
+  arrLabelsByUser!: Array<any>;
   newLabel: labelFormat = {
     idUser: '',
     nameLabel: '',
     colorLabel: '',
   }
+
+
   @ViewChild('labelName') labelName!: ElementRef;
   @ViewChild('inputColor') inputColor!: ElementRef;
 
-  ngOnInit(): void {
-    // const currUser = this.currUser;
-    // this.service.getDataLabelsByUser(currUser!).forEach((labels) => labels.forEach((label) => {
-    //   if(label.idUser === currUser) {
-    //     this.
-    //   }
-    // }))
-    
+  ngOnInit(): void {   
+    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
+      this.arrLabelsByUser = valor;
+      console.log(valor);
+    });
+    // console.log(this.service.getDataLabelsByUser(this.currUser!).stateChanges());    
   }
+
 
   showModalLabels() {
     this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
@@ -79,5 +84,7 @@ export class HeaderComponent implements OnInit {
   targetElementnewLabel(event: any) {
     this.labelName.nativeElement.value = '';
   }
-  ngAferViewInit () {  }
+  ngAferViewInit () {
+
+  }
 }

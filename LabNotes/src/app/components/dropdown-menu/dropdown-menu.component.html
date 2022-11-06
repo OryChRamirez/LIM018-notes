@@ -1,19 +1,43 @@
 <section #seccContDropdownMenu class="contdropdownMenu">
-  <button #btnDropdownMenu type="button" class="btnGeneral btnDropdownMenu" (click)="activeDropdownMenu()">
+  <button
+    #btnDropdownMenu
+    type="button"
+    class="btnGeneral btnDropdownMenu"
+    (click)="activeDropdownMenu()"
+  >
     <i class="bi bi-list"></i>
   </button>
   <ul class="ulList">
     <li>
-      <button type="button" class="btnGeneral btnContUser" (click)="showModalChangeNickname()">
+      <button
+        type="button"
+        class="btnGeneral btnContUser"
+        (click)="showModalChangeNickname()"
+      >
         <i class="bi bi-person-circle"></i>
         <span *ngIf="this.dropdownMenu">{{ nicknameUser }}</span>
       </button>
       <div class="modalEditNickname" *ngIf="modalChangeNameUser">
         <h3>Editar Nick:</h3>
-        <textarea #changeNicknameUser role="textbox" contenteditable class="nameUser" maxlength="20" (click)="targetElementNickname($event)">{{ nicknameUser }}</textarea>
+        <textarea
+          #changeNicknameUser
+          role="textbox"
+          contenteditable
+          class="nameUser"
+          maxlength="20"
+          (click)="targetElementNickname($event)"
+          >{{ nicknameUser }}</textarea
+        >
         <div class="contBtnSaveOrCancelModal">
-          <button class="btnsSaveOrCancelNickname" (click)="changeNickname()" >Guardar</button>
-          <button class="btnsSaveOrCancelNickname" (click)="closeModalChangeNickname()">Cancelar</button>
+          <button class="btnsSaveOrCancelNickname" (click)="changeNickname()">
+            Guardar
+          </button>
+          <button
+            class="btnsSaveOrCancelNickname"
+            (click)="closeModalChangeNickname()"
+          >
+            Cancelar
+          </button>
         </div>
       </div>
     </li>
@@ -22,41 +46,58 @@
     </div>
     <li>
       <button type="button" class="btnGeneral btnContNotes">
-          <i class="bi bi-journal-text"></i>
-          <span *ngIf="this.dropdownMenu">Notas</span>
+        <i class="bi bi-journal-text"></i>
+        <span *ngIf="this.dropdownMenu">Notas</span>
       </button>
     </li>
     <div>
       <hr class="hr" />
     </div>
     <li>
-      <button type="button" class="btnGeneral btnContLabels" >
-          <i class="bi bi-bookmark"></i>
-          <span *ngIf="this.dropdownMenu">Etiquetas</span>
-        </button>
-        <div #labelListStyle class="hrDotter"></div>
-      </li>
-      <div class="labelListVoid" *ngIf="listOfLabels[0] === undefined; else listOfLabelsTemplate">
-        <span *ngIf="this.dropdownMenu">No hay etiquetas</span>
-      </div>
-      <ng-template #listOfLabelsTemplate>
-        <div class="labelList">
-          <span *ngIf="this.dropdownMenu">
-            <i class="bi bi-caret-right-fill"></i>EETA<i class="bi bi-three-dots-vertical" (click)="activeOptionsLabels()"></i>
+      <button type="button" class="btnGeneral btnContLabels">
+        <i class="bi bi-bookmark"></i>
+        <span *ngIf="this.dropdownMenu">Etiquetas</span>
+      </button>
+      <div #labelListStyle class="hrDotter"></div>
+    </li>
+    <div
+      class="labelListVoid"
+      *ngIf="arrLabelsByUser.length === 0; else listOfLabelsTemplate"
+    >
+      <span *ngIf="this.dropdownMenu">No hay etiquetas</span>
+    </div>
+    <ng-template #listOfLabelsTemplate>
+      <div *ngFor="let label of arrLabelsByUser">
+        <div class="labelList" *ngIf="this.dropdownMenu">
+          <span>
+            <i
+              class="bi bi-caret-right-fill"
+              [ngStyle]="{ 'background-color': label.colorLabel }"
+            ></i>
+            {{ label.nameLabel}}
           </span>
-          <ul class="contBtnsEditAndDeleteLabels" *ngIf="optionsEditAndDeleteLabels">
-            <li><button  type="button" class="menuThreeDotsLabels">Editar</button></li>
-            <li><button type="button" class="menuThreeDotsLabels">Eliminar</button></li>
-        </ul>
+          <ul class="contBtnsEditAndDeleteLabels">
+            <li>
+              <button type="button" class="editAndDelete" (click)="editLabelById(arrLabelsByUser.indexOf(label))">
+                <i class="bi bi-pencil editAndDelete"></i>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="editAndDelete" (click)="deleteLabelById(arrLabelsByUser.indexOf(label))">
+                <i class="bi bi-x-circle editAndDelete"></i>
+              </button>
+            </li>
+          </ul>
         </div>
-      </ng-template>
+      </div>
+    </ng-template>
     <div>
       <hr class="hr" />
     </div>
     <li>
       <button type="button" class="btnGeneral btnContArchived">
-          <i class="bi bi-folder2-open"></i>
-          <span *ngIf="this.dropdownMenu">Archivados</span>
+        <i class="bi bi-folder2-open"></i>
+        <span *ngIf="this.dropdownMenu">Archivados</span>
       </button>
     </li>
     <div>
@@ -64,8 +105,8 @@
     </div>
     <li>
       <button class="contTrash" class="btnGeneral contArchived">
-          <i class="bi bi-trash"></i>
-          <span *ngIf="this.dropdownMenu">Papelera</span>
+        <i class="bi bi-trash"></i>
+        <span *ngIf="this.dropdownMenu">Papelera</span>
       </button>
     </li>
   </ul>

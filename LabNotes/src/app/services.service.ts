@@ -11,9 +11,11 @@ import {
 } from '@angular/fire/auth';
 import { collectionData, Firestore } from '@angular/fire/firestore';
 import UserFormat from 'src/app/interfaces/user.interface';
-import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, updateDoc, where } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import labelFormat from './interfaces/labels.interface';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,7 @@ export class ServicesService {
   constructor(
     private auth: Auth,
     private firestore: Firestore,
+    private of: AngularFirestore,
     ) {  }
     
   /* ------------------ FUNCIONES DE AUTENTICACIÓN --------------------------------- */
@@ -78,9 +81,10 @@ addDataLabels(label: labelFormat) {
   return addDoc(dbRef, label);
 }
 
-getDataLabelsByUser(): Observable<labelFormat[]> {
-  const dbRef = collection(this.firestore, 'dataLabels');
-  return collectionData(dbRef, { idField: 'id' }) as unknown as Observable<labelFormat[]>
+
+getDataLabelsByUser(idUser: string) {
+  const dbRef = this.of.collection('dataLabels', ref => ref.where('idUser', '==', idUser));
+  return dbRef.valueChanges();
 }
 
 $takeData = new EventEmitter<any>();

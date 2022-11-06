@@ -14,17 +14,17 @@ export class DropdownMenuComponent implements OnInit {
   @ViewChild('labelListStyle') labelListStyle!: ElementRef;
   @ViewChild('changeNicknameUser') changeNicknameUser!: ElementRef;
   @ViewChild('btnEditLabelName') btnEditLabelName!: ElementRef;
-  dropdownMenu: boolean = false;
+  dropdownMenu: boolean = true;
   optionsEditAndDeleteLabels: boolean = false;
   modalChangeNameUser: boolean = false;
   currUser: any = this.service.getCurrUser();
+  arrLabelsByUser: Array<any> = [];
   dataUser: UserFormat = {
     name: '',
     nickname: '',
     id: '',
   };
   nicknameUser!: string;
-  listOfLabels: Array<string> = ['1'];
 
   constructor(
     private renderer: Renderer2,
@@ -32,6 +32,10 @@ export class DropdownMenuComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    // this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
+    //   this.arrLabelsByUser = valor;
+    // });
+    
     this.service.$showModalChangeNickname.subscribe((valor) => {
       this.modalChangeNameUser = valor;
     })
@@ -42,8 +46,6 @@ export class DropdownMenuComponent implements OnInit {
         };
       });
     });
-    console.log(this.listOfLabels[0]);
-  
   }
 
   activeDropdownMenu() {
@@ -60,12 +62,13 @@ export class DropdownMenuComponent implements OnInit {
     }
   }
 
-  activeOptionsLabels() {
+  activeOptionsLabels(idLabel: string) {
     if(this.optionsEditAndDeleteLabels === true) {
       this.optionsEditAndDeleteLabels = false;
     } else {
       this.optionsEditAndDeleteLabels = true;
     }
+    console.log(idLabel);
   }
 
   showModalChangeNickname() {
@@ -89,5 +92,14 @@ export class DropdownMenuComponent implements OnInit {
   
   closeModalChangeNickname() {
     this.modalChangeNameUser = false;
+  }
+
+  editLabelById(idLabel: number) {
+    console.log(idLabel);
+  }
+
+  deleteLabelById(idLabel: number) {
+    console.log(idLabel);
+    
   }
 }

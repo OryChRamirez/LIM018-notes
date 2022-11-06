@@ -15,6 +15,7 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { StickyNotesComponent } from './components/sticky-notes/sticky-notes.component';
 import { FormsModule } from '@angular/forms';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 
 
 @NgModule({
@@ -32,6 +33,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())

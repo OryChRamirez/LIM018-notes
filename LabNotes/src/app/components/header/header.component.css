@@ -105,6 +105,12 @@
     border-radius: 0.5rem;
 }
 
+.contLabelsCreated {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
 .addLabel {
     color: #000;
     border-bottom: 0.1rem dotted;
