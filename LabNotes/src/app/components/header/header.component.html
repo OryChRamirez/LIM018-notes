@@ -32,11 +32,11 @@
 </div>
 <div class="modalCreateLabel" *ngIf="modalNewLabel">
   <h3>Nueva Etiqueta:</h3>
-  <textarea #changeNicknameUser role="textbox" contenteditable class="labelName" maxlength="20">Ejemplo...</textarea>
+  <textarea #labelName role="textbox" contenteditable class="labelName" maxlength="20" (click)="targetElementnewLabel($event)">Ejemplo...</textarea>
   <p #msgError class="msgError"></p>
   <div class="contColor">
     <h3>Color:</h3>
-    <input type="color">
+    <input #inputColor type="color">
   </div>
   <div class="contBtnSaveOrCancelModal">
     <button class="btnsSaveOrCancelNickname" (click)="saveNewLabel()">Guardar</button>

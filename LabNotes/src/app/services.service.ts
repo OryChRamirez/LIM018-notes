@@ -11,8 +11,9 @@ import {
 } from '@angular/fire/auth';
 import { collectionData, Firestore } from '@angular/fire/firestore';
 import UserFormat from 'src/app/interfaces/user.interface';
-import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
+import labelFormat from './interfaces/labels.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,16 @@ changeNicknameOrName(currUser: any, newValor:string) {
   const orderRef = doc(this.firestore, `dataUser/${currUser}`);
   return updateDoc(orderRef, {nickname: newValor})
 } 
+
+addDataLabels(label: labelFormat) {
+  const dbRef = collection(this.firestore, 'dataLabels');
+  return addDoc(dbRef, label);
+}
+
+getDataLabelsByUser(): Observable<labelFormat[]> {
+  const dbRef = collection(this.firestore, 'dataLabels');
+  return collectionData(dbRef, { idField: 'id' }) as unknown as Observable<labelFormat[]>
+}
 
 $takeData = new EventEmitter<any>();
 $showModelStickyNote = new EventEmitter<any>();
