@@ -13,7 +13,7 @@
     <button type="button" class="btnGeneral" (click)="showModalLabels()"><i class="bi bi-bookmark"></i></button>
   </div>
   <div class="contLabels" *ngIf="statusAsignLabel">
-    <button type="button" class="addLabel labels" (click)="showModalLabels()"><i class="bi bi-bookmark-plus"></i>Agregar</button>
+    <button type="button" class="addLabel labels" (click)="showModalNewLabel()"><i class="bi bi-bookmark-plus"></i>Agregar</button>
     <button class="labels ">
       <i class="bi bi-caret-right-fill color1"></i>
         <p>CASAAAAAAAAAA</p>
@@ -30,7 +30,7 @@
   <div class="contBtnLogOut">
     <button type="button" class="btnGeneral" (click)="signOut()"><i class="bi bi-box-arrow-right" ></i></button>
 </div>
-<div class="modalCreateLabel" >
+<div class="modalCreateLabel" *ngIf="modalNewLabel">
   <h3>Nueva Etiqueta:</h3>
   <textarea #changeNicknameUser role="textbox" contenteditable class="labelName" maxlength="20">Ejemplo...</textarea>
   <p #msgError class="msgError"></p>
@@ -39,9 +39,8 @@
     <input type="color">
   </div>
   <div class="contBtnSaveOrCancelModal">
-    <button class="btnsSaveOrCancelNickname">Guardar</button>
-    <button class="btnsSaveOrCancelNickname" >Cancelar</button>
+    <button class="btnsSaveOrCancelNickname" (click)="saveNewLabel()">Guardar</button>
+    <button class="btnsSaveOrCancelNickname" (click)="closeModalNewLabel()">Cancelar</button>
   </div>
 </div>
-
 </section>

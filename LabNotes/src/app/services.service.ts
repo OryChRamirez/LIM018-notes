@@ -74,6 +74,7 @@ changeNicknameOrName(currUser: any, newValor:string) {
 
 $takeData = new EventEmitter<any>();
 $showModelStickyNote = new EventEmitter<any>();
+$showModalChangeNickname = new EventEmitter<any>();
 }
 
 

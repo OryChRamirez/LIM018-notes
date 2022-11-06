@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
     ) { }
 
   statusAsignLabel: boolean = false;
+  modalNewLabel: boolean = false;
 
   ngOnInit(): void {
 
@@ -24,12 +25,12 @@ export class HeaderComponent implements OnInit {
     this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
     console.log(this.statusAsignLabel);
     this.service.$showModelStickyNote.emit(false);
-    
   }
 
   createStickyNote() {
     this.statusAsignLabel = false;
     this.service.$showModelStickyNote.emit(true);
+    this.service.$showModalChangeNickname.emit(false);
   }
 
   signOut() {
@@ -37,5 +38,17 @@ export class HeaderComponent implements OnInit {
     .then(() => this.router.navigate(['/login']));
   }
 
+  showModalNewLabel() {
+    this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
+    this.modalNewLabel = true;
+  }
+
+  saveNewLabel() {
+    this.modalNewLabel = false;
+  }
+
+  closeModalNewLabel() {
+    this.modalNewLabel = false;
+  }
   ngAferViewInit () {  }
 }

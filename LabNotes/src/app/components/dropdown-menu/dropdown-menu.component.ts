@@ -32,14 +32,17 @@ export class DropdownMenuComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-  this.service.getDataUser().forEach((users) => {
-    users.forEach((user) => {
-      if(user.id === this.service.getCurrUser()) {
-        this.nicknameUser = user.nickname;
-      };
+    this.service.$showModalChangeNickname.subscribe((valor) => {
+      this.modalChangeNameUser = valor;
+    })
+    this.service.getDataUser().forEach((users) => {
+      users.forEach((user) => {
+        if(user.id === this.service.getCurrUser()) {
+          this.nicknameUser = user.nickname;
+        };
+      });
     });
-  });
-  console.log(this.listOfLabels[0]);
+    console.log(this.listOfLabels[0]);
   
   }
 
@@ -66,6 +69,7 @@ export class DropdownMenuComponent implements OnInit {
   }
 
   showModalChangeNickname() {
+    this.service.$showModelStickyNote.emit(false);
     if(this.modalChangeNameUser === true) {
       this.modalChangeNameUser = false;
     } else {
