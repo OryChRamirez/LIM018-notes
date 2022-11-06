@@ -83,24 +83,23 @@
               </button>
             </li>
             <li>
-              <button type="button" class="editAndDelete" (click)="deleteLabelById(label.id)">
+              <button type="button" class="editAndDelete" (click)="deleteLabelById()">
                 <i class="bi bi-x-circle editAndDelete"></i>
               </button>
             </li>
           </ul>
         </div>
       </div>
-      <div class="modalCreateLabel" *ngIf="modalNewLabel">
+      <div class="modalCreateLabel" *ngIf="modalEditLabel">
         <h3>Nueva Etiqueta:</h3>
         <textarea
           #labelName
           role="textbox"
           contenteditable
           class="labelName"
-          maxlength="20"
+          maxlength="13"
           (click)="targetElementnewLabel($event)"
-        >
-    Ejemplo...</textarea
+        >Nuevo Nombre...</textarea
         >
         <p #msgError class="msgError"></p>
         <div class="contColor">
@@ -108,10 +107,21 @@
           <input #inputColor type="color" />
         </div>
         <div class="contBtnSaveOrCancelModal">
-          <button class="btnsSaveOrCancelNickname" (click)="saveNewLabel()">
+          <button class="btnsSaveOrCancelNickname" (click)="changeLabel()">
             Guardar
           </button>
           <button class="btnsSaveOrCancelNickname" (click)="closeModalNewLabel()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+      <div class="modalDeleteLabel" *ngIf="modalDeleteLabel">
+        <h3>¿Seguro que desea eliminar la etiqueta?</h3>
+        <div class="contBtnSaveOrCancelModal">
+          <button class="btnsSaveOrCancelNickname" (click)="confirmDeleteLabel(idActualLabel)">
+            Eliminar
+          </button>
+          <button class="btnsSaveOrCancelNickname" (click)="cancelDeleteLabel()">
             Cancelar
           </button>
         </div>

@@ -16,12 +16,19 @@ export class DropdownMenuComponent implements OnInit {
   @ViewChild('btnEditLabelName') btnEditLabelName!: ElementRef;
   @ViewChild('labelName') labelName!: ElementRef;
   @ViewChild('inputColor') inputColor!: ElementRef;
+  @ViewChild('msgError') msgError!: ElementRef;
 
   dropdownMenu: boolean = true;
   optionsEditAndDeleteLabels: boolean = false;
   modalChangeNameUser: boolean = false;
   statusAsignLabel: boolean = false;
-  modalNewLabel: boolean = false;
+  modalEditLabel: boolean = false;
+  modalDeleteLabel: boolean = false;
+  actualLabel: labelFormat = {
+    idUser: '',
+    nameLabel: '',
+    colorLabel: '',
+  } 
   currUser: any = this.service.getCurrUser();
   arrLabelsByUser: Array<any> = [];
   dataUser: UserFormat = {
@@ -35,6 +42,7 @@ export class DropdownMenuComponent implements OnInit {
     colorLabel: '',
   }
   nicknameUser!: string;
+  idActualLabel!: string;
 
   constructor(
     private renderer: Renderer2,
@@ -42,13 +50,16 @@ export class DropdownMenuComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    this.service.$closeModalsOfDropdown.subscribe((valor) => {
+      this.modalChangeNameUser = valor;
+      this.statusAsignLabel = valor;
+      this.modalEditLabel = valor;
+      this.modalDeleteLabel = valor;
+    })
     this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
       this.arrLabelsByUser = valor;
+      console.log(this.arrLabelsByUser);
     });
-    
-    this.service.$showModalChangeNickname.subscribe((valor) => {
-      this.modalChangeNameUser = valor;
-    })
     this.service.getDataUser().forEach((users) => {
       users.forEach((user) => {
         if(user.id === this.service.getCurrUser()) {
@@ -82,7 +93,11 @@ export class DropdownMenuComponent implements OnInit {
   }
 
   showModalChangeNickname() {
-    this.service.$showModelStickyNote.emit(false);
+    this.service.$closeModalsOfHeader.emit(false);
+    this.service.$showModelStickyNoteFromDropdown.emit(false);
+    this.modalDeleteLabel = false;
+    this.modalEditLabel = false;
+
     if(this.modalChangeNameUser === true) {
       this.modalChangeNameUser = false;
     } else {
@@ -104,31 +119,56 @@ export class DropdownMenuComponent implements OnInit {
     this.modalChangeNameUser = false;
   }
 
-  editLabelById(idLabel: number) {
+  editLabelById(idLabel: string) {
+    this.service.$closeModalsOfHeader.emit(false);
+    this.service.$showModelStickyNoteFromDropdown.emit(false);
+    this.modalChangeNameUser = false;
+    this.arrLabelsByUser.forEach((label) => {
+      if(idLabel === label.id) {
+        this.idActualLabel = idLabel;
+      }
+    })
+    console.log(this.idActualLabel);
     this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
-    this.modalNewLabel = true;
+    this.modalEditLabel = true;
+    this.modalDeleteLabel = false;
 
   }
 
   
-  deleteLabelById(idLabel: number) {
-    console.log(idLabel);
+  deleteLabelById() {
+    this.service.$closeModalsOfHeader.emit(false);
+    this.service.$showModelStickyNoteFromDropdown.emit(false);
+    this.modalChangeNameUser = false;
+    this.modalDeleteLabel = true;
+    this.modalEditLabel = false;
+
   }
 
+  confirmDeleteLabel(idLabel: string){
+    this.service.deleteLabel(idLabel);
+    this.modalDeleteLabel = false;
+  }
+  cancelDeleteLabel() {
+    this.modalDeleteLabel = false;
+  }
 
-  saveNewLabel() {
+  changeLabel() {
     const color = this.inputColor.nativeElement.value;
     const label = this.labelName.nativeElement.value;
     const idUser = this.currUser;
-    this.newLabel = {
-      idUser: idUser!,
-      nameLabel: label,
-      colorLabel: color,
-        }
+      const labelExist = this.arrLabelsByUser.find((labelData) => labelData.nameLabel === label);
+      if(labelExist !== undefined || label === 'Nuevo Nombre...') {
+        this.msgError.nativeElement.innerHTML = 'Elige otro nombre para la etiqueta'
+      } else {
+        this.msgError.nativeElement.innerHTML = ''
+        this.service.updateLabel(this.idActualLabel, label, color)
+        this.modalEditLabel = false;
+      }
   }
 
   closeModalNewLabel() {
-    this.modalNewLabel = false;
+    this.modalEditLabel = false;
   }
 
   targetElementnewLabel(event: any) {

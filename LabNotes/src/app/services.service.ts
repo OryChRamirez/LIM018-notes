@@ -94,9 +94,15 @@ updateLabel(idLabel: string, newNameLabel: string, newColorLabel: string) {
   })
 }
 
+deleteLabel(idLabel: string) {
+  return this.of.collection('dataLabels').doc(idLabel).delete();
+}
+
 $takeData = new EventEmitter<any>();
-$showModelStickyNote = new EventEmitter<any>();
-$showModalChangeNickname = new EventEmitter<any>();
+$showModelStickyNoteFromHeader = new EventEmitter<any>();
+$showModelStickyNoteFromDropdown = new EventEmitter<any>();
+$closeModalsOfDropdown = new EventEmitter<any>();
+$closeModalsOfHeader = new EventEmitter<any>();
 }
 
 

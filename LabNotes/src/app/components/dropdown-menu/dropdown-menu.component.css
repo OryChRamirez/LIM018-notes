@@ -137,7 +137,7 @@
     padding: 0 0.15rem;
 }
 
-.modalCreateLabel {
+.modalCreateLabel, .modalDeleteLabel {
     display: flex;
     flex-direction: column;
     background-color: #d9d9d9;
@@ -145,6 +145,7 @@
     justify-content: space-around;
     font-family: 'Merriweather', serif;
     align-items: center;
+    text-align: center;
     border-radius: 0.5rem;
     top: 50vh;
     left: 50vw;
@@ -155,6 +156,9 @@
     padding: 1rem;
 }
 
+.modalDeleteLabel {
+    height: 11rem;
+}
 .labelName {
     display: flex;
     height: 3rem;

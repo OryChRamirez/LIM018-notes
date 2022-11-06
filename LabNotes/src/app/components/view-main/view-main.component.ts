@@ -24,9 +24,8 @@ export class ViewMainComponent implements OnInit {
     statusAsignLabel: boolean = false;
 
   ngOnInit(): void {
-    this.service.$showModelStickyNote.subscribe((valor) => {
-      this.statusNewStickyNote = valor;
-    });
+    this.service.$showModelStickyNoteFromDropdown .subscribe((valor)=> this.statusNewStickyNote = valor);
+    this.service.$showModelStickyNoteFromHeader.subscribe((valor)=> this.statusNewStickyNote = valor);
     this.service.$takeData.subscribe((currUser) => {
       this.dataUser = {
         id: currUser.id,

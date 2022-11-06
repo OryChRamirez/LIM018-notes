@@ -2,9 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../services.service';
 import labelFormat from '../../interfaces/labels.interface';
-import { collection, query, where } from 'firebase/firestore';
-import { collectionData, Firestore } from '@angular/fire/firestore';
-import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-header',
@@ -33,7 +30,11 @@ export class HeaderComponent implements OnInit {
   @ViewChild('inputColor') inputColor!: ElementRef;
   @ViewChild('msgError') msgError!: ElementRef;
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
+    this.service.$closeModalsOfHeader.subscribe((valor) => {
+      this.statusAsignLabel = valor;
+      this.modalNewLabel = valor;
+    })  
     this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
       this.arrLabelsByUser = valor;
     });
@@ -42,14 +43,13 @@ export class HeaderComponent implements OnInit {
 
   showModalLabels() {
     this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
-    console.log(this.statusAsignLabel);
-    this.service.$showModelStickyNote.emit(false);
   }
 
   createStickyNote() {
+    this.service.$closeModalsOfDropdown.emit(false);
+    this.service.$showModelStickyNoteFromHeader.emit(true);
     this.statusAsignLabel = false;
-    this.service.$showModelStickyNote.emit(true);
-    this.service.$showModalChangeNickname.emit(false);
+    this.modalNewLabel = false;
   }
 
   signOut() {
@@ -58,6 +58,8 @@ export class HeaderComponent implements OnInit {
   }
 
   showModalNewLabel() {
+    this.service.$closeModalsOfDropdown.emit(false);
+    this.service.$showModelStickyNoteFromHeader.emit(false);
     this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
     this.modalNewLabel = true;
   }
@@ -72,7 +74,7 @@ export class HeaderComponent implements OnInit {
       colorLabel: color,
         }
       const labelExist = this.arrLabelsByUser.find((labelData) => labelData.nameLabel === label);
-      if(labelExist !== undefined) {
+      if(labelExist !== undefined || label === 'Ejemplo...') {
         this.msgError.nativeElement.innerHTML = 'Elige otro nombre para la etiqueta'
       } else {
         this.msgError.nativeElement.innerHTML = ''
