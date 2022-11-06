@@ -23,7 +23,7 @@ export class DropdownMenuComponent implements OnInit {
     nickname: '',
     id: '',
   };
-  nicknameUser: string = '';
+  nicknameUser!: string;
   listOfLabels: Array<string> = ['1'];
 
   constructor(
@@ -79,11 +79,8 @@ export class DropdownMenuComponent implements OnInit {
 
   async changeNickname() {
   let nickname = this.changeNicknameUser.nativeElement.value; 
-  if(nickname === '') {
-     nickname = this.nicknameUser;
-  }
-  const response = await this.service.changeNicknameOrName(this.currUser, nickname);
   this.modalChangeNameUser = false;
+  const response = await this.service.changeNicknameOrName(this.currUser, nickname);
   }
   
   closeModalChangeNickname() {
