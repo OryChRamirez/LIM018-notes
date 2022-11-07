@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
     ) { }
 
   currUser = this.service.getCurrUser();
-  statusAsignLabel: boolean = false;
+  statusAssignLabel: boolean = false;
   modalNewLabel: boolean = false;
   arrLabelsByUser!: Array<any>;
   newLabel: labelFormat = {
@@ -31,40 +31,40 @@ export class HeaderComponent implements OnInit {
   @ViewChild('msgError') msgError!: ElementRef;
 
   ngOnInit(): void {
-    this.service.$closeModalsOfHeader.subscribe((valor) => {
-      this.statusAsignLabel = valor;
+    this.service.$closeModalsOfHeader.subscribe((valor) => { //CIERRA LOS MODALES DE HEADER CUANDO SE ABRE UNO DEL DROPDOWN
+      this.statusAssignLabel = valor;
       this.modalNewLabel = valor;
     })  
-    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
+    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => { //TRAE LAS ETIQUETAS DEL USUARIO
       this.arrLabelsByUser = valor;
     });
   }
 
 
-  showModalLabels() {
-    this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
+  showModalLabels() { //MUESTRA U OCULTA EL MODAL DE AGREGAR ETIQUETAS
+    this.statusAssignLabel? this.statusAssignLabel = false: this.statusAssignLabel = true;
   }
 
-  createStickyNote() {
+  createStickyNote() { // MUESTRA EL MODAL PARA CREAR NOTAS
     this.service.$closeModalsOfDropdown.emit(false);
     this.service.$showModelStickyNoteFromHeader.emit(true);
-    this.statusAsignLabel = false;
+    this.statusAssignLabel = false;
     this.modalNewLabel = false;
   }
 
-  signOut() {
+  signOut() { // FUNCIÓN PARA EL BOTÓN DE CERRAR SESIÓN
     this.service.singOutUser()
     .then(() => this.router.navigate(['/login']));
   }
 
-  showModalNewLabel() {
+  showModalNewLabel() { //MUESTRA EL MODAL PARA CREAR ETIQUETAS NUEVAS
     this.service.$closeModalsOfDropdown.emit(false);
     this.service.$showModelStickyNoteFromHeader.emit(false);
-    this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
+    this.statusAssignLabel? this.statusAssignLabel = false: this.statusAssignLabel = true;
     this.modalNewLabel = true;
   }
 
-  saveNewLabel() {
+  saveNewLabel() { //FUNCIÓN PARA CREAR LAS ETIQUETAS NUEVAS
     const color = this.inputColor.nativeElement.value;
     const label = this.labelName.nativeElement.value;
     const idUser = this.currUser;
@@ -83,11 +83,11 @@ export class HeaderComponent implements OnInit {
       }
   }
 
-  closeModalNewLabel() {
+  closeModalNewLabel() { //CIERRA EL MODAL DE ETIQUETA NUEVA EN CASO DE CANCELAR
     this.modalNewLabel = false;
   }
 
-  targetElementnewLabel(event: any) {
+  targetElementnewLabel(event: any) { //LIMPIA EL NOMBRE DE LA ETIQUETA AL DARLE CLICK AL INPUT
     this.labelName.nativeElement.value = '';
   }
 }

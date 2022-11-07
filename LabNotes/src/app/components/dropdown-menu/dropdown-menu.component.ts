@@ -18,17 +18,18 @@ export class DropdownMenuComponent implements OnInit {
   @ViewChild('inputColor') inputColor!: ElementRef;
   @ViewChild('msgError') msgError!: ElementRef;
 
-  dropdownMenu: boolean = true;
-  optionsEditAndDeleteLabels: boolean = false;
+  dropdownMenu: boolean = false;
   modalChangeNameUser: boolean = false;
-  statusAsignLabel: boolean = false;
+  statusAssignLabel: boolean = false;
   modalEditLabel: boolean = false;
   modalDeleteLabel: boolean = false;
+
   actualLabel: labelFormat = {
     idUser: '',
     nameLabel: '',
     colorLabel: '',
   } 
+
   currUser: any = this.service.getCurrUser();
   arrLabelsByUser: Array<any> = [];
   dataUser: UserFormat = {
@@ -36,11 +37,13 @@ export class DropdownMenuComponent implements OnInit {
     nickname: '',
     id: '',
   };
+
   newLabel: labelFormat = {
     idUser: '',
     nameLabel: '',
     colorLabel: '',
   }
+
   nicknameUser!: string;
   idActualLabel!: string;
 
@@ -50,17 +53,19 @@ export class DropdownMenuComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.service.$closeModalsOfDropdown.subscribe((valor) => {
+    this.service.$closeModalsOfDropdown.subscribe((valor) => { //CIERRA TODOS LOS MODALES CUANDO SE DA CLICK EN ALGUN MODAL DEL HEADER
       this.modalChangeNameUser = valor;
-      this.statusAsignLabel = valor;
+      this.statusAssignLabel = valor;
       this.modalEditLabel = valor;
       this.modalDeleteLabel = valor;
     })
-    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
+
+    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => { //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
       this.arrLabelsByUser = valor;
       console.log(this.arrLabelsByUser);
     });
-    this.service.getDataUser().forEach((users) => {
+
+    this.service.getDataUser().forEach((users) => { //TRAE LOS DATOS DEL USUARIO LOGUEADO
       users.forEach((user) => {
         if(user.id === this.service.getCurrUser()) {
           this.nicknameUser = user.nickname;
@@ -69,7 +74,7 @@ export class DropdownMenuComponent implements OnInit {
     });
   }
 
-  activeDropdownMenu() {
+  activeDropdownMenu() { // MUESTRA U OCULTA LAS OPCIONES DEL MENU LATERAL AL DARLE CLICK
     if (this.dropdownMenu === true) {
       this.dropdownMenu = false;
       this.renderer.setStyle(this.btnDropdownMenu.nativeElement, 'align-self', 'center')
@@ -83,16 +88,7 @@ export class DropdownMenuComponent implements OnInit {
     }
   }
 
-  activeOptionsLabels(idLabel: string) {
-    if(this.optionsEditAndDeleteLabels === true) {
-      this.optionsEditAndDeleteLabels = false;
-    } else {
-      this.optionsEditAndDeleteLabels = true;
-    }
-    console.log(idLabel);
-  }
-
-  showModalChangeNickname() {
+  showModalChangeNickname() { //MUESTRA EL MODAL PARA CAMBIAR EL NICK DEL USUARIO
     this.service.$closeModalsOfHeader.emit(false);
     this.service.$showModelStickyNoteFromDropdown.emit(false);
     this.modalDeleteLabel = false;
@@ -105,21 +101,21 @@ export class DropdownMenuComponent implements OnInit {
     }
   }
 
-  targetElementNickname(event: any) {
+  targetElementNickname(event: any) { //LIMPIA EL NOMBRE DE USUARIO AL DARLE CLICK AL INPUT
     this.changeNicknameUser.nativeElement.value = '';
   }
 
-  async changeNickname() {
+  async changeNickname() { //FUNCIÓN PARA CAMBIAR EL NICK DEL USUARIO EN FIRESTORE
   let nickname = this.changeNicknameUser.nativeElement.value; 
   this.modalChangeNameUser = false;
   const response = await this.service.changeNicknameOrName(this.currUser, nickname);
   }
   
-  closeModalChangeNickname() {
+  closeModalChangeNickname() { // CIERRA EL MODAL DE CAMBIO DE NOMBRE EN CASO DE CANCELAR LA ACCIÓN
     this.modalChangeNameUser = false;
   }
 
-  editLabelById(idLabel: string) {
+  editLabelById(idLabel: string) { //ABRE EL MODAL DE EDITAR ETIQUETA
     this.service.$closeModalsOfHeader.emit(false);
     this.service.$showModelStickyNoteFromDropdown.emit(false);
     this.modalChangeNameUser = false;
@@ -128,15 +124,14 @@ export class DropdownMenuComponent implements OnInit {
         this.idActualLabel = idLabel;
       }
     })
-    console.log(this.idActualLabel);
-    this.statusAsignLabel? this.statusAsignLabel = false: this.statusAsignLabel = true;
+    this.statusAssignLabel? this.statusAssignLabel = false: this.statusAssignLabel = true;
     this.modalEditLabel = true;
     this.modalDeleteLabel = false;
 
   }
 
   
-  deleteLabelById() {
+  deleteLabelById() { //ABRE EL MODAL DE BORRAR ETIQUETA
     this.service.$closeModalsOfHeader.emit(false);
     this.service.$showModelStickyNoteFromDropdown.emit(false);
     this.modalChangeNameUser = false;
@@ -145,15 +140,15 @@ export class DropdownMenuComponent implements OnInit {
 
   }
 
-  confirmDeleteLabel(idLabel: string){
+  confirmDeleteLabel(idLabel: string){ //FUNCIÓN PARA ELIMINAR ETIQUETA
     this.service.deleteLabel(idLabel);
     this.modalDeleteLabel = false;
   }
-  cancelDeleteLabel() {
+  cancelDeleteLabel() { //FUNCIÓN PARA CANCELAR EL ELIMINAR ETIQUETA
     this.modalDeleteLabel = false;
   }
 
-  changeLabel() {
+  changeLabel() { //FUNCIÓN PARA EDITAR EL NOMBRE Y COLOR DE LA ETIQUETA
     const color = this.inputColor.nativeElement.value;
     const label = this.labelName.nativeElement.value;
     const idUser = this.currUser;
@@ -167,11 +162,11 @@ export class DropdownMenuComponent implements OnInit {
       }
   }
 
-  closeModalNewLabel() {
+  closeModalEditLabel() { //CIERRA EL MODAL DE EDITAR ETIQUETA
     this.modalEditLabel = false;
   }
 
-  targetElementnewLabel(event: any) {
+  targetElementnewLabel(event: any) { //LIMPIA EL NOMBRE DE LA ETIQUETA AL DARLE CLICK AL INPUT
     this.labelName.nativeElement.value = '';
   }
 

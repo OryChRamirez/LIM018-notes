@@ -72,29 +72,29 @@ getCurrUser() { // OBTIENE EL USUARIO LOGUEADO ACTUALMENTE
   return this.auth.currentUser?.uid;
 }
 
-changeNicknameOrName(currUser: any, newValor:string) {
+changeNicknameOrName(currUser: any, newValor:string) { //ACTUALIZA EL NICK DEL USUARIO
   const orderRef = doc(this.firestore, `dataUser/${currUser}`);
   return updateDoc(orderRef, {nickname: newValor})
 } 
 
-addDataLabels(label: labelFormat) {
+addDataLabels(label: labelFormat) { //PERMITE AGREGAR UNA NUEVA ETIQUETA
   const dbRef = collection(this.firestore, 'dataLabels');
   return addDoc(dbRef, label);
 }
 
-getDataLabelsByUser(idUser: string) {
+getDataLabelsByUser(idUser: string) { // TRAE LAS ETIQUETAS SOLO DEL USUARIO LOGUEADO
   const dbRef = this.of.collection('dataLabels', ref => ref.where('idUser', '==', idUser)); 
   return dbRef.valueChanges({ idField: 'id' });
 }
 
-updateLabel(idLabel: string, newNameLabel: string, newColorLabel: string) {
+updateLabel(idLabel: string, newNameLabel: string, newColorLabel: string) { // ACTUALIZA LA ETIQUETA
   return this.of.collection('dataLabels').doc(idLabel).update({
     nameLabel: newNameLabel,
     colorLabel: newColorLabel,
   })
 }
 
-deleteLabel(idLabel: string) {
+deleteLabel(idLabel: string) { //ELIMINA LA ETIQUETA DE LA COLECCIÓN
   return this.of.collection('dataLabels').doc(idLabel).delete();
 }
 

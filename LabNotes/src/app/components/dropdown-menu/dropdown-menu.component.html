@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="modalCreateLabel" *ngIf="modalEditLabel">
-        <h3>Nueva Etiqueta:</h3>
+        <h3>Cambiar Etiqueta:</h3>
         <textarea
           #labelName
           role="textbox"
@@ -110,7 +110,7 @@
           <button class="btnsSaveOrCancelNickname" (click)="changeLabel()">
             Guardar
           </button>
-          <button class="btnsSaveOrCancelNickname" (click)="closeModalNewLabel()">
+          <button class="btnsSaveOrCancelNickname" (click)="closeModalEditLabel()">
             Cancelar
           </button>
         </div>

@@ -7,16 +7,18 @@
                 <span>Asignar etiqueta</span>
                 <i class="bi bi-bookmark"></i>
             </button>
-            <div class="contLabels" *ngIf="statusAsignLabel">
-                <button class="labels color1">
-                    <p>CASA</p>
-                </button>
-                <button class="labels color2">
-                    <P>TRABAJO</P>
-                </button>
-                <button class="labels color3">
-                    <P>COLE</P>
-                </button>
+            <div class="contLabels" *ngIf="statusAssignLabel">
+                <div *ngFor="let label of arrLabelsByUser">
+                    <div class="labelList">
+                      <span (click)="getValuesOfLabel($event, label.id)">
+                        <i #colorValue
+                          class="bi bi-caret-right-fill"
+                          [ngStyle]="{ 'background-color': label.colorLabel }"
+                        ></i>
+                        {{ label.nameLabel}}
+                      </span>
+                    </div>
+                </div>
             </div>
                 <textarea #titleContent role="textbox" contenteditable class="titleNote" (click)="targetElementTitleNote($event)" maxlength="25">Cosas por hacer...</textarea>
                 <textarea #txtContent role="textbox" contenteditable class="txtNote" (click)="targetElementTxtNote($event)">Comprar pan, comprar café...</textarea>

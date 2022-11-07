@@ -21,7 +21,7 @@ export class ForgetPasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  resetPass() {
+  resetPass() { //FUNCIÓN PARA ENVIAR UN CORREO Y RESTAURAR EL PASSWORD DEL USUARIO 
     const emailUser = this.emailUser.nativeElement.value;
     if(emailUser !== '') {
       this.msgError.nativeElement.innerHTML = '';

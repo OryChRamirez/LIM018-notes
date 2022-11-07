@@ -9,6 +9,7 @@ import UserFormat from '../../interfaces/user.interface';
   styleUrls: ['./view-main.component.css']
 })
 export class ViewMainComponent implements OnInit {
+  idLabelToAssign: string = '';
   dataUser: UserFormat = {
     name: '',
     nickname: ''
@@ -20,8 +21,12 @@ export class ViewMainComponent implements OnInit {
     ) { }
     @ViewChild('titleContent') titleContent!: ElementRef;
     @ViewChild('txtContent') txtContent!: ElementRef;
-    statusNewStickyNote: boolean = false;
-    statusAsignLabel: boolean = false;
+    @ViewChild('colorValue') colorValue!: ElementRef;
+    statusNewStickyNote: boolean = true;
+    statusAssignLabel: boolean = true;
+    arrLabelsByUser: Array<any> = [];
+    currUser: any = this.service.getCurrUser();
+
 
   ngOnInit(): void {
     this.service.$showModelStickyNoteFromDropdown .subscribe((valor)=> this.statusNewStickyNote = valor);
@@ -32,6 +37,11 @@ export class ViewMainComponent implements OnInit {
         name: currUser.name,
         nickname: currUser.nickname,
       }
+    });
+
+    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => { //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
+      this.arrLabelsByUser = valor;
+      console.log(this.arrLabelsByUser);
     });
   }
 
@@ -54,15 +64,22 @@ export class ViewMainComponent implements OnInit {
   }
 
   selectLabel() {
-    this.statusAsignLabel = true;
+    this.statusAssignLabel? this.statusAssignLabel = false: this.statusAssignLabel = true; 
+  }
+
+  getValuesOfLabel(even: any, idLabel: string) {
+    if(even.target) {
+      this.idLabelToAssign = idLabel;
+    }
+    console.log(this.idLabelToAssign);
   }
   saveNewNote() {
-    this.statusAsignLabel = false;
+    this.statusAssignLabel = false;
     this.statusNewStickyNote = false;
   }
 
   closeCreatedNote() {
-    this.statusAsignLabel = false;
+    this.statusAssignLabel = false;
     this.statusNewStickyNote = false;
   }
 
