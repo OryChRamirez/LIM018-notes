@@ -5,6 +5,19 @@
     padding: 0;
 }
 
+.contMain {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.contHeader {
+    z-index: 1000;
+}
+.contDropdown {
+    position: absolute;
+}
 .seccStikyNote {
     display: flex;
     position: absolute;

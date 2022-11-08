@@ -1,9 +1,10 @@
-<app-header></app-header>
-<app-dropdown-menu></app-dropdown-menu>
 <section class="contMain">
-  <section class="seccStikyNote" *ngIf="statusNewStickyNote">
-    <div class="contStikyNote">
-      <button class="labelIcon" (click)="selectLabel()">
+    <div class="contHeader"><app-header></app-header></div>
+    <div class="contDropdown"><app-dropdown-menu></app-dropdown-menu> </div>
+    <div class="contNotes"><app-sticky-notes></app-sticky-notes></div>
+    <section class="seccStikyNote" *ngIf="statusNewStickyNote">
+        <div class="contStikyNote">
+            <button class="labelIcon" (click)="selectLabel()">
         <span #txtAssignLabel>Asignar etiqueta</span>
         <i #bookmarkLabel class="bi bi-bookmark"></i>
       </button>
@@ -58,4 +59,5 @@
             </button> -->
     </div>
   </section>
+<section class="contNotesFiltered"></section>
 </section>

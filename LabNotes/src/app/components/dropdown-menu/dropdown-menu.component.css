@@ -7,9 +7,8 @@
 }
 
 .contdropdownMenu {
-    display: flex;
     flex-direction: column;
-    width: max-content;
+    width: 3.5rem;
     height: 100vh;
     background-color: #d9d9d9;
     align-items: center;

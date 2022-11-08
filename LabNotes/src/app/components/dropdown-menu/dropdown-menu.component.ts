@@ -130,17 +130,21 @@ export class DropdownMenuComponent implements OnInit {
   }
 
   
-  deleteLabelById() { //ABRE EL MODAL DE BORRAR ETIQUETA
+  deleteLabelById(idLabel: string) { //ABRE EL MODAL DE BORRAR ETIQUETA
     this.service.$closeModalsOfHeader.emit(false);
     this.service.$showModelStickyNoteFromDropdown.emit(false);
+    this.arrLabelsByUser.forEach((label) => {
+      if(idLabel === label.id) {
+        this.idActualLabel = idLabel;
+      }
+    })
     this.modalChangeNameUser = false;
     this.modalDeleteLabel = true;
     this.modalEditLabel = false;
-
   }
 
   confirmDeleteLabel(idLabel: string){ //FUNCIÓN PARA ELIMINAR ETIQUETA
-    this.service.deleteLabel(idLabel);
+    this.service.deleteLabel(this.idActualLabel);
     this.modalDeleteLabel = false;
   }
   cancelDeleteLabel() { //FUNCIÓN PARA CANCELAR EL ELIMINAR ETIQUETA

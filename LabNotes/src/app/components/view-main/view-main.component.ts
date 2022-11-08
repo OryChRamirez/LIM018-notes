@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { ServicesService } from '../../services.service';
-import { Router } from '@angular/router';
 import UserFormat from '../../interfaces/user.interface';
 import NotesFormat from '../../interfaces/notes.interface';
 import labelFormat from '../../interfaces/labels.interface';
@@ -101,7 +100,7 @@ export class ViewMainComponent implements OnInit {
       this.renderer.setStyle(this.txtAssignLabel.nativeElement, 'font-weight', 'bold');
       this.renderer.setStyle(this.bookmarkLabel.nativeElement, 'color', 'black');
       this.renderer.setStyle(this.bookmarkLabel.nativeElement, 'font-weight', 'bold');
-      this.renderer.setStyle(this.bookmarkLabel.nativeElement, 'background-color', label.colorLabel);
+      this.renderer.setStyle(this.bookmarkLabel.nativeElement, 'color', label.colorLabel);
       this.renderer.setStyle(this.bookmarkLabel.nativeElement, 'border-radius', '0.3rem');
     }
     this.statusAssignLabel = false;    
@@ -123,7 +122,7 @@ export class ViewMainComponent implements OnInit {
         category: {
           id: this.labelAssignId === undefined? 'N/A' : this.labelAssignId,
           nameLabel: this.labelAssignName === undefined? 'N/A' : this.labelAssignName,
-          colorLabel: this.labelAssignColor === undefined? 'N/A' : this.labelAssignColor,
+          colorLabel: this.labelAssignColor === undefined? 'transparent' : this.labelAssignColor,
         },
         title: titleContent,
         contNote: txtContent,
