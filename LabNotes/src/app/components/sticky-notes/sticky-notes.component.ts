@@ -29,23 +29,23 @@ export class StickyNotesComponent implements OnInit {
   }
 
 showModalEditNoteOptions() {
-  this.renderer.removeAttribute(this.titleContent.nativeElement, 'readonly');
-  this.renderer.addClass(this.titleContent.nativeElement, 'editNotes');
-  this.renderer.removeAttribute(this.txtContent.nativeElement, 'readonly');
-  this.renderer.addClass(this.txtContent.nativeElement, 'editNotes');
+  // this.renderer.removeAttribute(this.titleContent.nativeElement, 'readonly');
+  // this.renderer.addClass(this.titleContent.nativeElement, 'editNotes');
+  // this.renderer.removeAttribute(this.txtContent.nativeElement, 'readonly');
+  // this.renderer.addClass(this.txtContent.nativeElement, 'editNotes');
 
-  /* MANDA EL CURSOR AL FINAL DEL TEXTO EN EL TITULO */
-  const elemLength = this.titleContent.nativeElement.value.length;
-  if(this.titleContent.nativeElement.setSelectionRange) {
-    this.titleContent.nativeElement.focus();
-    this.titleContent.nativeElement.setSelectionRange(elemLength, elemLength);
-  } else if (this.titleContent.nativeElement.createTextRange) {
-    const range = this.titleContent.nativeElement.createTextRange();
-    range.moveEnd('character', elemLength);
-    range.moveStart('character', elemLength);
-    range.select();
-  }
-  this.showEditOptions = true;
+  // /* MANDA EL CURSOR AL FINAL DEL TEXTO EN EL TITULO */
+  // const elemLength = this.titleContent.nativeElement.value.length;
+  // if(this.titleContent.nativeElement.setSelectionRange) {
+  //   this.titleContent.nativeElement.focus();
+  //   this.titleContent.nativeElement.setSelectionRange(elemLength, elemLength);
+  // } else if (this.titleContent.nativeElement.createTextRange) {
+  //   const range = this.titleContent.nativeElement.createTextRange();
+  //   range.moveEnd('character', elemLength);
+  //   range.moveStart('character', elemLength);
+  //   range.select();
+  // }
+  // this.showEditOptions = true;
 }
 
 acceptEditNote() {
