@@ -1,44 +1,61 @@
 <app-header></app-header>
 <app-dropdown-menu></app-dropdown-menu>
 <section class="contMain">
-    <section class="seccStikyNote" *ngIf="statusNewStickyNote">
-        <div class="contStikyNote">
-            <button class="labelIcon" (click)="selectLabel()">
-                <span>Asignar etiqueta</span>
-                <i class="bi bi-bookmark"></i>
-            </button>
-            <div class="contLabels" *ngIf="statusAssignLabel">
-                <div *ngFor="let label of arrLabelsByUser">
-                    <div class="labelList">
-                      <span (click)="getValuesOfLabel($event, label.id)">
-                        <i #colorValue
-                          class="bi bi-caret-right-fill"
-                          [ngStyle]="{ 'background-color': label.colorLabel }"
-                        ></i>
-                        {{ label.nameLabel}}
-                      </span>
-                    </div>
-                </div>
-            </div>
-                <textarea #titleContent role="textbox" contenteditable class="titleNote" (click)="targetElementTitleNote($event)" maxlength="25">Cosas por hacer...</textarea>
-                <textarea #txtContent role="textbox" contenteditable class="txtNote" (click)="targetElementTxtNote($event)">Comprar pan, comprar café...</textarea>
+  <section class="seccStikyNote" *ngIf="statusNewStickyNote">
+    <div class="contStikyNote">
+      <button class="labelIcon" (click)="selectLabel()">
+        <span #txtAssignLabel>Asignar etiqueta</span>
+        <i #bookmarkLabel class="bi bi-bookmark"></i>
+      </button>
+      <div class="contLabels" *ngIf="statusAssignLabel">
+        <div *ngFor="let label of arrLabelsByUser">
+          <div class="labelList">
+            <span #labelName (click)="getValuesOfLabel($event, label)">
+              <i
+                #colorValue
+                class="bi bi-caret-right-fill"
+                [ngStyle]="{ 'background-color': label.colorLabel }"
+              ></i>
+              {{ label.nameLabel }}
+            </span>
+          </div>
         </div>
-        <div class="contFooterOptions">
-            <!-- <button class="labelOption">
+      </div>
+      <textarea
+        #titleContent
+        role="textbox"
+        contenteditable
+        class="titleNote"
+        (click)="targetElementTitleNote()"
+        maxlength="25"
+      >TITULO</textarea
+      >
+      <textarea
+        #txtContent
+        role="textbox"
+        contenteditable
+        class="txtNote"
+        (click)="targetElementTxtNote()"
+      >CONTENIDO</textarea
+      >
+      <p #msgError class="msgError"></p>
+    </div>
+    <div class="contFooterOptions">
+      <!-- <button class="labelOption">
                 <i class="bi bi-bookmark"></i>
             </button>
             <button class="editOption">
                 <i class="bi bi-pencil"></i>
             </button> -->
-            <button class="checkOption" (click)="saveNewNote()">
-                <i class="bi bi-check-circle"></i>
-            </button>
-             <button class="closeOption"  (click)="closeCreatedNote()">
-                <i class="bi bi-x-circle"></i>
-            </button>
-            <!-- <button class="deleteOption">
+      <button class="checkOption" (click)="saveNewNote()">
+        <i class="bi bi-check-circle"></i>
+      </button>
+      <button class="closeOption" (click)="closeCreatedNote()">
+        <i class="bi bi-x-circle"></i>
+      </button>
+      <!-- <button class="deleteOption">
                 <i class="bi bi-x-circle"></i>
             </button> -->
-        </div>
-    </section>
+    </div>
+  </section>
 </section>

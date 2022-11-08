@@ -62,7 +62,6 @@ export class DropdownMenuComponent implements OnInit {
 
     this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => { //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
       this.arrLabelsByUser = valor;
-      console.log(this.arrLabelsByUser);
     });
 
     this.service.getDataUser().forEach((users) => { //TRAE LOS DATOS DEL USUARIO LOGUEADO

@@ -1,8 +1,16 @@
+import labelFormat from './labels.interface';
 export default interface NotesFormat {
+    id?: string,
     idUser: string,
-    category?: Array<any>[],
+    category: {
+        id: string,
+        nameLabel: string,
+        colorLabel: string,
+    },
     title: string,
     contNote: string,
-    date: string,
-    status: string,
+    status: {
+        archived: false,
+        trash: false,
+    },
 };

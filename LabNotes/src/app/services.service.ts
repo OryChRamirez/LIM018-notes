@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import labelFormat from './interfaces/labels.interface';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { idToken } from '@angular/fire/auth';
+import NotesFormat from './interfaces/notes.interface';
 
 
 @Injectable({
@@ -58,6 +59,9 @@ export class ServicesService {
 
 /* --------------------------------- FUNCIONES PARA OBTENER COLECCIONES DE FIRESTORE ---------------------------------*/
 
+
+/* -------------------- AGREGAR Y BUSCAR USUARIOS -------------------- */
+
 addDataUser(user: UserFormat, id: string) { // AGREGAR UN NUEVO USUARIO A LA COLECCIÓN CUANDO SE REGISTRA
   const dbRef = doc(this.firestore, 'dataUser', id);
   return setDoc(dbRef, user);
@@ -76,6 +80,8 @@ changeNicknameOrName(currUser: any, newValor:string) { //ACTUALIZA EL NICK DEL U
   const orderRef = doc(this.firestore, `dataUser/${currUser}`);
   return updateDoc(orderRef, {nickname: newValor})
 } 
+
+/* -------------------- AGREGAR, EDITAR, ELIMINAR Y BUSCAR ETIQUETAS -------------------- */
 
 addDataLabels(label: labelFormat) { //PERMITE AGREGAR UNA NUEVA ETIQUETA
   const dbRef = collection(this.firestore, 'dataLabels');
@@ -97,6 +103,19 @@ updateLabel(idLabel: string, newNameLabel: string, newColorLabel: string) { // A
 deleteLabel(idLabel: string) { //ELIMINA LA ETIQUETA DE LA COLECCIÓN
   return this.of.collection('dataLabels').doc(idLabel).delete();
 }
+
+/* -------------------- AGREGAR, EDITAR, ELIMINAR Y BUSCAR NOTAS -------------------- */
+
+addDataNotes(note: NotesFormat) { //PERMITE AGREGAR UNA NUEVA NOTA
+  const dbRef = collection(this.firestore, 'dataNotes');
+  return addDoc(dbRef, note);   
+}
+
+getDataNotesByUser(idUser: string) { // TRAE LAS ETIQUETAS SOLO DEL USUARIO LOGUEADO
+  const dbRef = this.of.collection('dataNotes', ref => ref.where('idUser', '==', idUser)); 
+  return dbRef.valueChanges({ idField: 'id' });
+}
+/* -------------------- EVENT EMMITER -------------------- */
 
 $takeData = new EventEmitter<any>();
 $showModelStickyNoteFromHeader = new EventEmitter<any>();
