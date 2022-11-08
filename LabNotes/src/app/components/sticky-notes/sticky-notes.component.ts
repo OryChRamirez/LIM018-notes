@@ -1,83 +1,156 @@
-import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  Renderer2,
+  HostListener,
+} from '@angular/core';
+import labelFormat from 'src/app/interfaces/labels.interface';
+import NotesFormat from 'src/app/interfaces/notes.interface';
 import { ServicesService } from '../../services.service';
-import NotesFormat from '../../interfaces/notes.interface';
 
 @Component({
   selector: 'app-sticky-notes',
   templateUrl: './sticky-notes.component.html',
-  styleUrls: ['./sticky-notes.component.css']
+  styleUrls: ['./sticky-notes.component.css'],
 })
 export class StickyNotesComponent implements OnInit {
-
   @ViewChild('titleContent') titleContent!: ElementRef;
   @ViewChild('txtContent') txtContent!: ElementRef;
+  @ViewChild('txtAssignLabel') txtAssignLabel!: ElementRef;
+  @ViewChild('colorAssignLabel') colorAssignLabel!: ElementRef;
+  @ViewChild('bookmarkLabel') bookmarkLabel!: ElementRef;
 
-  showEditOptions: boolean = false;
-  currUser: any = this.service.getCurrUser();
-  notesByUser: Array<any> = []
+  public selecIndex: number = NaN;
+  public selecIndex4Label: number = NaN;
+  public showEditOptions: boolean = false;
+  public currUser: any = this.service.getCurrUser();
+  public notesByUser: Array<any> = [];
+  public statusAssignLabel: boolean = false;
+  public arrLabelsByUser: Array<any> = [];
+  labelAssignId!: string;
+  labelAssignName!: string;
+  labelAssignColor!: string;
+  public newDataLabel: NotesFormat = {
+    idUser: '',
+    category: {
+      id: '',
+      nameLabel: '',
+      colorLabel: '',
+    },
+    title: '',
+    contNote: '',
+    status: {
+      archived: false,
+      trash: false,
+    }
+  }
 
-  constructor(
-    private renderer: Renderer2,
-    private service: ServicesService,
-  ) { }
+
+  constructor(private renderer: Renderer2, private service: ServicesService) {}
 
   ngOnInit(): void {
+    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
+      //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
+      this.arrLabelsByUser = valor;
+    });
     this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
       this.notesByUser = notes;
       console.log(this.notesByUser);
     });
   }
 
-showModalEditNoteOptions() {
-  // this.renderer.removeAttribute(this.titleContent.nativeElement, 'readonly');
-  // this.renderer.addClass(this.titleContent.nativeElement, 'editNotes');
-  // this.renderer.removeAttribute(this.txtContent.nativeElement, 'readonly');
-  // this.renderer.addClass(this.txtContent.nativeElement, 'editNotes');
+  @HostListener('mousewheel', ['$event'])
+  onMousewheel(event: any) {
+    this.statusAssignLabel = false;
+  }
 
-  // /* MANDA EL CURSOR AL FINAL DEL TEXTO EN EL TITULO */
-  // const elemLength = this.titleContent.nativeElement.value.length;
-  // if(this.titleContent.nativeElement.setSelectionRange) {
-  //   this.titleContent.nativeElement.focus();
-  //   this.titleContent.nativeElement.setSelectionRange(elemLength, elemLength);
-  // } else if (this.titleContent.nativeElement.createTextRange) {
-  //   const range = this.titleContent.nativeElement.createTextRange();
-  //   range.moveEnd('character', elemLength);
-  //   range.moveStart('character', elemLength);
-  //   range.select();
-  // }
-  // this.showEditOptions = true;
-}
+  showModalEditNoteOptions(i: number) {
+    this.selecIndex = i;
+    // /* MANDA EL CURSOR AL FINAL DEL TEXTO EN EL TITULO */
+    const elemLength = this.titleContent.nativeElement.value.length;
+    if (this.titleContent.nativeElement.setSelectionRange) {
+      this.titleContent.nativeElement.focus();
+      this.titleContent.nativeElement.setSelectionRange(elemLength, elemLength);
+    } else if (this.titleContent.nativeElement.createTextRange) {
+      const range = this.titleContent.nativeElement.createTextRange();
+      range.moveEnd('character', elemLength);
+      range.moveStart('character', elemLength);
+      range.select();
+    }
+    this.showEditOptions = true;
+  }
+  asiggnLabelModal(i: number) {
+    this.selecIndex4Label = i;
+    this.statusAssignLabel
+      ? (this.statusAssignLabel = false)
+      : (this.statusAssignLabel = true);
+    console.log(this.statusAssignLabel);
+  }
 
-acceptEditNote() {
-  this.renderer.setAttribute(this.titleContent.nativeElement, 'readonly', 'true');
-  this.renderer.removeClass(this.titleContent.nativeElement, 'editNotes');
-  this.renderer.setAttribute(this.txtContent.nativeElement, 'readonly', 'true');
-  this.renderer.removeClass(this.txtContent.nativeElement, 'editNotes');
+  getValuesOfLabel(even: any, label: labelFormat, idNote: string) {
+    if (even.target) {
+      this.labelAssignId = label.id!;
+      this.labelAssignName = label.nameLabel!;
+      this.labelAssignColor = label.colorLabel!;
+      this.txtAssignLabel.nativeElement.innerHTML = label.nameLabel;
+      this.renderer.setStyle(this.colorAssignLabel.nativeElement ,'color', label.colorLabel);
+      this.service.updateLabelInNote(idNote, label);
+    }
+    this.statusAssignLabel = false;
+  }
 
-  this.showEditOptions = false;
-}
-cancelEditNote() {
-  this.renderer.removeAttribute(this.titleContent.nativeElement, 'readonly');
-  this.renderer.removeClass(this.titleContent.nativeElement, 'editNotes');
-  this.renderer.removeAttribute(this.txtContent.nativeElement, 'readonly');
-  this.renderer.removeClass(this.txtContent.nativeElement, 'editNotes');
-
-  this.showEditOptions = false;
-}
-}
-
-/* function setCaretPosEnd(ctrl) {
-      var varCtlLen = ctrl.value.length;
-      // For Most Web Browsers
-      if (ctrl.setSelectionRange) {
-        ctrl.focus();
-        ctrl.setSelectionRange(varCtlLen, varCtlLen);
-      // IE8 and below
-      } else if (ctrl.createTextRange) {
-        var range = ctrl.createTextRange();
-        range.collapse(true);
-        range.moveEnd('character', varCtlLen);
-        range.moveStart('character', varCtlLen);
-        range.select();
+  acceptEditNote(note: any) {
+    const newTitle = this.titleContent.nativeElement.value;
+    const newcontNote = this.txtContent.nativeElement.value;
+    if(newTitle === '' || newcontNote === '') {
+      this.selecIndex = NaN;
+      this.showEditOptions = false;
+      this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
+        this.notesByUser = notes;
+        console.log(this.notesByUser);
+      });
+    } else {
+      this.newDataLabel = {
+        id: note.id,
+        idUser: this.currUser,
+        category: {
+          id: note.category.id,
+          nameLabel: note.category.nameLabel,
+          colorLabel: note.category.colorLabel,
+        },
+        title: this.titleContent.nativeElement.value,
+        contNote: this.txtContent.nativeElement.value,
+        status: {
+          archived: false,
+          trash: false,
+        },
       }
-    }*/
+      this.service.updateNoteContent(note.id, this.newDataLabel);  
+    }    
+    this.renderer.setAttribute(
+      this.titleContent.nativeElement,
+      'readonly',
+      'true'
+    );
+    this.renderer.removeClass(this.titleContent.nativeElement, 'editNotes');
+    this.renderer.setAttribute(
+      this.txtContent.nativeElement,
+      'readonly',
+      'true'
+    );
+    this.renderer.removeClass(this.txtContent.nativeElement, 'editNotes');
+    this.selecIndex = NaN;
+    this.showEditOptions = false;
+  }
+
+  cancelEditNote() {
+    this.renderer.removeAttribute(this.titleContent.nativeElement, 'readonly');
+    this.renderer.removeClass(this.titleContent.nativeElement, 'editNotes');
+    this.renderer.removeAttribute(this.txtContent.nativeElement, 'readonly');
+    this.renderer.removeClass(this.txtContent.nativeElement, 'editNotes');
+    this.selecIndex = NaN;
+    this.showEditOptions = false;
+  }
+}

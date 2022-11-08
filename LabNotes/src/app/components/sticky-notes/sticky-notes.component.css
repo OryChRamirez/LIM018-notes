@@ -131,8 +131,9 @@
     flex-direction: column;
     width: max-content;
     height: auto;
+    align-self: flex-start;
+    margin-left: -8rem;
     padding: 0 0.3rem;
-    left: 95%;
     background-color: #d9d9d9;
     box-shadow: 0 0 0.5rem .2rem rgba(0, 0, 0, 0.25);
     border-radius: 0.5rem;

@@ -1,13 +1,14 @@
 <section class="contGeneralStikyNotes">
-  <section class="seccStikyNote" *ngFor="let note of notesByUser">
+  <section class="seccStikyNote" *ngFor="let note of notesByUser; index as i">
     <div class="contStikyNote">
       <button class="labelIcon">
-        <span>{{note.category.nameLabel}}</span>
-        <i class="bi bi-bookmark" [ngStyle]="{ 'color': note.category.colorLabel }"></i>
+        <span #txtAssignLabel>{{note.category.nameLabel}}</span>
+        <i class="bi bi-bookmark" #colorAssignLabel [ngStyle]="{ 'color': note.category.colorLabel }"></i>
       </button>
       <textarea
         #titleContent
-        readonly
+        [readonly]="this.selecIndex != i"
+        [ngClass]="{'editNotes': this.selecIndex === i}"
         role="textbox"
         maxlength="25"
         class="titleNoteFromData"
@@ -15,33 +16,51 @@
       >
       <textarea
         #txtContent
-        readonly
+        [readonly]="this.selecIndex != i"
+        [ngClass]="{'editNotes': this.selecIndex === i}"
+
         role="textbox"
-        maxlength="25"
         class="txtNoteFromData"
       >{{note.contNote}}</textarea
       >
     </div>
-    <div class="contFooterOptions" *ngIf="!showEditOptions; else editOptions">
-      <button class="labelOption">
+    <div class="contFooterOptions" *ngIf=" this.selecIndex != i">
+      <button class="labelOption" (click)="asiggnLabelModal(i)">
         <i class="bi bi-bookmark"></i>
       </button>
-      <button class="editOption" (click)="showModalEditNoteOptions()">
+      <div class="contLabels" *ngIf="statusAssignLabel && this.selecIndex4Label === i">
+        <div *ngFor="let label of arrLabelsByUser">
+          <div class="labelList">
+            <span #labelName (click)="getValuesOfLabel($event, label, note.id)">
+              <i
+                #colorValue
+                class="bi bi-caret-right-fill"
+                [ngStyle]="{ 'background-color': label.colorLabel }"
+              ></i>
+              {{ label.nameLabel }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <button class="editOption" (click)="showModalEditNoteOptions(i)">
         <i class="bi bi-pencil"></i>
+      </button>
+      <button class="archivedOption">
+        <i class="bi bi-folder2-open"></i>
       </button>
       <button class="deleteOption">
         <i class="bi bi-x-circle"></i>
       </button>
     </div>
-    <ng-template #editOptions>
+    <ng-container  *ngIf="this.selecIndex === i">
       <div class="contFooterOptions">
-        <button class="checkOption" (click)="acceptEditNote()">
+        <button class="checkOption" (click)="acceptEditNote(note)">
           <i class="bi bi-check-circle"></i>
         </button>
         <button class="closeOption" (click)="cancelEditNote()">
           <i class="bi bi-x-circle"></i>
         </button>
       </div>
-    </ng-template>
+    </ng-container>
   </section>
 </section>

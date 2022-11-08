@@ -120,8 +120,8 @@ export class ViewMainComponent implements OnInit {
              this.newNote = {
         idUser: this.currUser,
         category: {
-          id: this.labelAssignId === undefined? 'N/A' : this.labelAssignId,
-          nameLabel: this.labelAssignName === undefined? 'N/A' : this.labelAssignName,
+          id: this.labelAssignId === undefined? '' : this.labelAssignId,
+          nameLabel: this.labelAssignName === undefined? '' : this.labelAssignName,
           colorLabel: this.labelAssignColor === undefined? 'transparent' : this.labelAssignColor,
         },
         title: titleContent,

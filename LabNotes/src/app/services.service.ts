@@ -115,6 +115,39 @@ getDataNotesByUser(idUser: string) { // TRAE LAS ETIQUETAS SOLO DEL USUARIO LOGU
   const dbRef = this.of.collection('dataNotes', ref => ref.where('idUser', '==', idUser)); 
   return dbRef.valueChanges({ idField: 'id' });
 }
+
+updateNoteContent(idNote: string, newContentNote: NotesFormat) { // ACTUALIZA LA NOTA
+  return this.of.collection('dataNotes').doc(idNote).update({
+    category: {
+      id: newContentNote.category.id,
+      nameLabel: newContentNote.category.nameLabel,
+      colorLabel: newContentNote.category.colorLabel,
+      },
+      title: newContentNote.title,
+      contNote: newContentNote.contNote
+  })
+  
+}
+
+updateLabelInNote(idNote: string, label: labelFormat) {
+  return this.of.collection('dataNotes').doc(idNote).update({
+    category: {
+      id: label.id,
+      nameLabel: label.nameLabel,
+      colorLabel: label.colorLabel,
+      },
+  })
+}
+
+sendNoteToTrash(idNote: string) {
+    return this.of.collection('dataNotes').doc(idNote).update({
+      status: {
+        archived: false,
+        trasn: true,
+      }
+  })
+
+}
 /* -------------------- EVENT EMMITER -------------------- */
 
 $takeData = new EventEmitter<any>();
