@@ -59,7 +59,7 @@ export class StickyNotesComponent implements OnInit {
       this.arrLabelsByUser = labels; 
     });
 
-    this.service.$showFilterNotes.subscribe((valor) =>{
+    this.service.$showFilterNotes.subscribe((valor) =>{  
       if(valor.allNotes) {
         this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
           this.notesByUser = notes;
@@ -165,6 +165,8 @@ export class StickyNotesComponent implements OnInit {
   restoreNotesToInitFromTrash(idNote: string) {
     this.service.restoreNotes(idNote);
     this.showModalNotification = true;
+    this.service.$changeColorBlack.emit('black');
+    this.service.$changeColorWhite.emit('white');
     this.txtNotification = 'Se ha enviado la nota al inicio';
 
   }
@@ -172,18 +174,15 @@ export class StickyNotesComponent implements OnInit {
   restoreNotesToInitFromArchived(idNote: string) {
     this.service.restoreNotes(idNote);
     this.showModalNotification = true;
+    this.service.$changeColorBlack.emit('black');
+    this.service.$changeColorWhite.emit('white');
     this.txtNotification = 'Se ha enviado la nota al inicio';
   }
 
   closeModalNotification(){
     this.showModalNotification = false;
-    this.service.getDataNotesByUser(this.currUser).subscribe((valor) =>
-    {
-      this.notesByUser = valor;
-    });
     this.service.$changeColorBlack.emit('black');
-    this.service.$changeColorWhite.emit('white');
-  }
+    this.service.$changeColorWhite.emit('white');  }
 
   deleteNote(idNote: string){
     this.service.deleteNote(idNote);

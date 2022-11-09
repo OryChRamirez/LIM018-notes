@@ -133,12 +133,13 @@ export class ServicesService {
 
   getDataNotesByUser(idUser: string) {
     // TRAE LAS ETIQUETAS SOLO DEL USUARIO LOGUEADO
-    const dbRef = this.of.collection('dataNotes', (ref) =>
+    const dbRef = this.of.collection('dataNotes', ((ref) => 
       ref
       .where('status.archived', '==', false)
       .where('status.trash', '==', false)
       .where('idUser', '==', idUser)
-    );
+      .orderBy('category.nameLabel','asc')
+    ));
     return dbRef.valueChanges({ idField: 'id' });
   }
 
@@ -147,6 +148,7 @@ export class ServicesService {
       ref
         .where('status.archived', '==', true)
         .where('idUser', '==', idUser)
+        .orderBy('category.nameLabel','asc')
     );
     return dbRef.valueChanges({ idField: 'id' });
   }
@@ -156,6 +158,8 @@ export class ServicesService {
     ref
       .where('status.trash', '==', true)
       .where('idUser', '==', idUser)
+      .orderBy('category.nameLabel','asc')
+
   );
   return dbRef.valueChanges({ idField: 'id' });
 }
@@ -235,6 +239,8 @@ export class ServicesService {
         ref
           .where('category.id', '==', idLabel)
           .where('idUser', '==', idUser)
+          .where('status.archived', '==', false)
+          .where('status.trash', '==', false)    
       );
       return dbRef.valueChanges({ idField: 'id' });
   }
