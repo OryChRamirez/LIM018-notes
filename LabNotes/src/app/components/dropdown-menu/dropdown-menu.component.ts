@@ -17,12 +17,23 @@ export class DropdownMenuComponent implements OnInit {
   @ViewChild('labelName') labelName!: ElementRef;
   @ViewChild('inputColor') inputColor!: ElementRef;
   @ViewChild('msgError') msgError!: ElementRef;
+  @ViewChild('notesIcon') notesIcon!: ElementRef;
+  @ViewChild('archivedIcon') archivedIcon!: ElementRef;
+  @ViewChild('trashIcon') trashIcon!: ElementRef;
+
 
   dropdownMenu: boolean = false;
   modalChangeNameUser: boolean = false;
   statusAssignLabel: boolean = false;
   modalEditLabel: boolean = false;
   modalDeleteLabel: boolean = false;
+  changeColorNoteIcon: boolean = false;
+
+  showNotes: any = {
+    allNotes: true,
+    archivedNotes: false,
+    trashNotes: false,
+  }
 
   actualLabel: labelFormat = {
     idUser: '',
@@ -53,6 +64,7 @@ export class DropdownMenuComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+
     this.service.$closeModalsOfDropdown.subscribe((valor) => { //CIERRA TODOS LOS MODALES CUANDO SE DA CLICK EN ALGUN MODAL DEL HEADER
       this.modalChangeNameUser = valor;
       this.statusAssignLabel = valor;
@@ -62,8 +74,8 @@ export class DropdownMenuComponent implements OnInit {
 
     this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => { //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
       this.arrLabelsByUser = valor;
+      this.renderer.setStyle(this.notesIcon.nativeElement, 'color', 'white');
     });
-
     this.service.getDataUser().forEach((users) => { //TRAE LOS DATOS DEL USUARIO LOGUEADO
       users.forEach((user) => {
         if(user.id === this.service.getCurrUser()) {
@@ -73,6 +85,9 @@ export class DropdownMenuComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(){
+    this.service.$showFilterNotes.emit(this.showNotes);
+  }
   activeDropdownMenu() { // MUESTRA U OCULTA LAS OPCIONES DEL MENU LATERAL AL DARLE CLICK
     if (this.dropdownMenu === true) {
       this.dropdownMenu = false;
@@ -98,6 +113,8 @@ export class DropdownMenuComponent implements OnInit {
     } else {
       this.modalChangeNameUser = true;
     }
+    this.activeDropdownMenu();
+    this.dropdownMenu = true;
   }
 
   targetElementNickname(event: any) { //LIMPIA EL NOMBRE DE USUARIO AL DARLE CLICK AL INPUT
@@ -173,4 +190,40 @@ export class DropdownMenuComponent implements OnInit {
     this.labelName.nativeElement.value = '';
   }
 
+  showAllNotes(){
+    this.showNotes = {
+      allNotes: true,
+      archivedNotes: false,
+      trashNotes: false,
+    }
+    this.service.$showFilterNotes.emit(this.showNotes);
+    this.renderer.setStyle(this.notesIcon.nativeElement, 'color', 'white');
+    this.renderer.setStyle(this.archivedIcon.nativeElement, 'color', 'black');
+    this.renderer.setStyle(this.trashIcon.nativeElement, 'color', 'black');
+  }
+
+  showTrashNotes(){
+    this.showNotes = {
+      allNotes: false,
+      archivedNotes: false,
+      trashNotes: true,
+    }
+    this.service.$showFilterNotes.emit(this.showNotes);
+    this.renderer.setStyle(this.trashIcon.nativeElement, 'color', 'white');
+    this.renderer.setStyle(this.archivedIcon.nativeElement, 'color', 'black');
+    this.renderer.setStyle(this.notesIcon.nativeElement, 'color', 'black');
+  }
+
+  showArchivedNotes(){
+    this.showNotes = {
+      allNotes: false,
+      archivedNotes: true,
+      trashNotes: false,
+    }
+
+    this.service.$showFilterNotes.emit(this.showNotes);
+    this.renderer.setStyle(this.archivedIcon.nativeElement, 'color', 'white');
+    this.renderer.setStyle(this.trashIcon.nativeElement, 'color', 'black');
+    this.renderer.setStyle(this.notesIcon.nativeElement, 'color', 'black');
+  }
 }

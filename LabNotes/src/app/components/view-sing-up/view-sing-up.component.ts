@@ -80,7 +80,6 @@ export class ViewSingUpComponent implements OnInit {
         }
       });
     } else {
-      console.log(this.msgError.nativeElement.innerHTML);
       this.msgError.nativeElement.innerHTML = 'Debes completar los campos';
     }
   }

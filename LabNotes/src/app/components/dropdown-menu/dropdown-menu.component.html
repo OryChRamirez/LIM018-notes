@@ -45,8 +45,8 @@
       <hr class="hr" />
     </div>
     <li>
-      <button type="button" class="btnGeneral btnContNotes">
-        <i class="bi bi-journal-text"></i>
+      <button type="button" class="btnGeneral btnContNotes" (click)="showAllNotes()">
+        <i #notesIcon class="bi bi-journal-text"></i>
         <span *ngIf="this.dropdownMenu">Notas</span>
       </button>
     </li>
@@ -131,8 +131,8 @@
       <hr class="hr" />
     </div>
     <li>
-      <button type="button" class="btnGeneral btnContArchived">
-        <i class="bi bi-folder2-open"></i>
+      <button type="button" class="btnGeneral btnContArchived" (click)="showArchivedNotes()">
+        <i #archivedIcon class="bi bi-folder2-open"></i>
         <span *ngIf="this.dropdownMenu">Archivados</span>
       </button>
     </li>
@@ -140,8 +140,8 @@
       <hr class="hr" />
     </div>
     <li>
-      <button class="contTrash" class="btnGeneral contArchived">
-        <i class="bi bi-trash"></i>
+      <button class="contTrash" class="btnGeneral contArchived" (click)="showTrashNotes()">
+        <i #trashIcon class="bi bi-trash"></i>
         <span *ngIf="this.dropdownMenu">Papelera</span>
       </button>
     </li>

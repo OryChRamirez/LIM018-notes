@@ -93,6 +93,8 @@ export class ViewLoginComponent implements OnInit {
             break;
         }
       });
+    } else {
+      this.msgError.nativeElement.innerHTML = 'Debes completar los campos';
     }
   }
 

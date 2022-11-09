@@ -7,10 +7,9 @@
 
 .contGeneralStikyNotes {
     display: flex;
-    width: 100vw;
-    height: 100vh;
-    margin-top: 3.5rem;
-    margin-left: 3.5rem;
+    width:95vw;
+    height: 95vh;
+    margin: 3.5rem;
     justify-content: flex-start;
     padding: 2rem 3rem;
     gap: 3rem;
@@ -127,11 +126,12 @@
 
 .contLabels {
     display: flex;
-    position: absolute;
+    position: sticky;
     flex-direction: column;
     width: max-content;
     height: auto;
-    align-self: flex-start;
+    justify-content: flex-end;
+    align-self: flex-end;
     margin-left: -8rem;
     padding: 0 0.3rem;
     background-color: #d9d9d9;
@@ -158,3 +158,48 @@
     gap: 0.3rem;
 }
 
+.contModalConfirm {
+    display: flex;
+    flex-direction: column;
+    width: 25.625rem;
+    height: 22.875rem;
+    background-color: #fff;
+    margin: auto;
+    border-radius: 1.5rem;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.contModalConfirm {
+    position: absolute;
+    height: 17rem;
+    width: 27rem;
+    align-self: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.btnGeneral {
+    font-weight: 400;
+    font-size: 1.3rem;
+    width: 9.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.5));
+    background: #FFFFFF;
+}
+
+.contIconCheck {
+    margin-bottom: -2rem;
+}
+
+.contIconCheck > .bi {
+    font-size: 5rem;
+    color: rgb(15, 170, 15);
+}

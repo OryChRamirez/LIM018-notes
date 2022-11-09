@@ -32,6 +32,8 @@ export class StickyNotesComponent implements OnInit {
   labelAssignId!: string;
   labelAssignName!: string;
   labelAssignColor!: string;
+  showModalNotification: boolean = false;
+  showModalSendToArchived: boolean = false;
   public newDataLabel: NotesFormat = {
     idUser: '',
     category: {
@@ -46,25 +48,33 @@ export class StickyNotesComponent implements OnInit {
       trash: false,
     }
   }
-
+  txtNotification: string = '';
 
   constructor(private renderer: Renderer2, private service: ServicesService) {}
 
   ngOnInit(): void {
-    this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => {
+    this.service.getDataLabelsByUser(this.currUser!).subscribe((labels) => {
       //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
-      this.arrLabelsByUser = valor;
+      this.arrLabelsByUser = labels;
+      
     });
-    this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
-      this.notesByUser = notes;
-      console.log(this.notesByUser);
+    this.service.$showFilterNotes.subscribe((valor) =>{
+      if(valor.allNotes) {
+        this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
+          this.notesByUser = notes;
+        });
+      } else if(valor.archivedNotes) {
+        this.service.getNotesArchivedByUser(this.currUser).subscribe((notes) => {
+          this.notesByUser = notes;
+        });   
+      } else if(valor.trashNotes) {
+        this.service.getNotesTrashByUser(this.currUser).subscribe((notes) => {
+          this.notesByUser = notes;
+        });
+      }
     });
   }
 
-  @HostListener('mousewheel', ['$event'])
-  onMousewheel(event: any) {
-    this.statusAssignLabel = false;
-  }
 
   showModalEditNoteOptions(i: number) {
     this.selecIndex = i;
@@ -152,5 +162,52 @@ export class StickyNotesComponent implements OnInit {
     this.renderer.removeClass(this.txtContent.nativeElement, 'editNotes');
     this.selecIndex = NaN;
     this.showEditOptions = false;
+  }
+
+  sendToTrash(idnote: string){
+    this.service.sendNoteToTrash(idnote);
+    this.showModalNotification = true;
+    this.service.getNotesTrashByUser(this.currUser).subscribe((notes) => {
+      this.notesByUser = notes;
+    });
+    this.txtNotification = 'Nota enviada a la papelera';
+  }
+
+  sendToArchived(idNote: string){
+    this.service.sendNoteToArchive(idNote);
+    this.showModalNotification = true;
+    this.service.getNotesArchivedByUser(this.currUser).subscribe((notes) => {
+      this.notesByUser = notes;
+    });
+    this.txtNotification = 'Nota enviada Archivo';
+  }
+
+  restoreNotesToInitFromTrash(idNote: string) {
+    this.service.restoreNotes(idNote);
+    this.showModalNotification = true;
+    this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
+      this.notesByUser = notes;
+    });
+    this.txtNotification = 'Se ha enviado la nota al inicio';
+
+  }
+
+  restoreNotesToInitFromArchived(idNote: string) {
+    this.service.restoreNotes(idNote);
+    this.showModalNotification = true;
+    this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
+      this.notesByUser = notes;
+    });
+    this.txtNotification = 'Se ha enviado la nota al inicio';
+  }
+
+  closeModalNotification(){
+    this.showModalNotification = false;
+  }
+
+  deleteNote(idNote: string){
+    this.service.deleteNote(idNote);
+    this.showModalNotification = true;
+    this.txtNotification = 'Nota eliminada definitivamente';
   }
 }

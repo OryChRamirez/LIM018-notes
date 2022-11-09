@@ -122,7 +122,7 @@ export class ViewMainComponent implements OnInit {
         category: {
           id: this.labelAssignId === undefined? '' : this.labelAssignId,
           nameLabel: this.labelAssignName === undefined? '' : this.labelAssignName,
-          colorLabel: this.labelAssignColor === undefined? 'transparent' : this.labelAssignColor,
+          colorLabel: this.labelAssignColor === undefined? 'none' : this.labelAssignColor,
         },
         title: titleContent,
         contNote: txtContent,

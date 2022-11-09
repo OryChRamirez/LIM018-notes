@@ -1,4 +1,5 @@
-<section class="contGeneralStikyNotes">
+
+<section #contGeneralNotes class="contGeneralStikyNotes">
   <section class="seccStikyNote" *ngFor="let note of notesByUser; index as i">
     <div class="contStikyNote">
       <button class="labelIcon">
@@ -7,7 +8,7 @@
       </button>
       <textarea
         #titleContent
-        [readonly]="this.selecIndex != i"
+        [readonly]="this.selecIndex !== i"
         [ngClass]="{'editNotes': this.selecIndex === i}"
         role="textbox"
         maxlength="25"
@@ -16,7 +17,7 @@
       >
       <textarea
         #txtContent
-        [readonly]="this.selecIndex != i"
+        [readonly]="this.selecIndex !== i"
         [ngClass]="{'editNotes': this.selecIndex === i}"
 
         role="textbox"
@@ -24,7 +25,7 @@
       >{{note.contNote}}</textarea
       >
     </div>
-    <div class="contFooterOptions" *ngIf=" this.selecIndex != i">
+    <div class="contFooterOptions" *ngIf=" this.selecIndex !== i && !note.status.archived && !note.status.trash">
       <button class="labelOption" (click)="asiggnLabelModal(i)">
         <i class="bi bi-bookmark"></i>
       </button>
@@ -45,14 +46,14 @@
       <button class="editOption" (click)="showModalEditNoteOptions(i)">
         <i class="bi bi-pencil"></i>
       </button>
-      <button class="archivedOption">
-        <i class="bi bi-folder2-open"></i>
+      <button class="archivedOption" (click)="sendToArchived(note.id)">
+        <i class="bi bi-folder-check"></i>
       </button>
-      <button class="deleteOption">
-        <i class="bi bi-x-circle"></i>
+      <button class="deleteOption" (click)="sendToTrash(note.id)">
+        <i class="bi bi-trash"></i>
       </button>
     </div>
-    <ng-container  *ngIf="this.selecIndex === i">
+    <ng-container  *ngIf="this.selecIndex === i && !note.status.archived && !note.status.trash">
       <div class="contFooterOptions">
         <button class="checkOption" (click)="acceptEditNote(note)">
           <i class="bi bi-check-circle"></i>
@@ -62,5 +63,30 @@
         </button>
       </div>
     </ng-container>
+    <ng-container  *ngIf="this.selecIndex !== i && !note.status.archived && note.status.trash">
+      <div class="contFooterOptions">
+        <button class="checkOption" (click)="restoreNotesToInitFromArchived(note.id)">
+          <i class="bi bi-arrow-up-left-circle"></i>
+        </button>
+        <button class="closeOption" (click)="deleteNote(note.id)">
+          <i class="bi bi-x-circle"></i>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container  *ngIf="this.selecIndex !== i && note.status.archived && !note.status.trash">
+      <div class="contFooterOptions">
+        <button class="checkOption" (click)="restoreNotesToInitFromTrash(note.id)">
+          <i class="bi bi-folder-x"></i>
+        </button>
+        <button class="closeOption" (click)="sendToTrash(note.id)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </ng-container>
   </section>
+  <div class="contModalConfirm" *ngIf="showModalNotification">
+    <div class="contIconCheck"><i class="bi bi-check-circle"></i></div>
+    <h3 class="txtConfirm">{{txtNotification}}</h3>
+    <button type="button" class="btnGeneral" (click)="closeModalNotification()">Aceptar</button>
+  </div>
 </section>
