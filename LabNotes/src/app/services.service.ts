@@ -239,4 +239,6 @@ export class ServicesService {
   $closeModalsOfDropdown = new EventEmitter<any>();
   $closeModalsOfHeader = new EventEmitter<any>();
   $showFilterNotes = new EventEmitter<any>();
+  $changeColorWhite = new EventEmitter<any>();
+  $changeColorBlack = new EventEmitter<any>();
 }

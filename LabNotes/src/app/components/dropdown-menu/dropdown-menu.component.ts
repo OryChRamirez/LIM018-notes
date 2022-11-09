@@ -71,7 +71,11 @@ export class DropdownMenuComponent implements OnInit {
       this.modalEditLabel = valor;
       this.modalDeleteLabel = valor;
     })
-
+    this.service.$changeColorBlack.subscribe((valor) => {
+      this.renderer.setStyle(this.archivedIcon.nativeElement, 'color', valor);
+      this.renderer.setStyle(this.trashIcon.nativeElement, 'color', valor);  
+    })
+    this.service.$changeColorWhite.subscribe((valor) => this.renderer.setStyle(this.notesIcon.nativeElement, 'color', valor));
     this.service.getDataLabelsByUser(this.currUser!).subscribe((valor) => { //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
       this.arrLabelsByUser = valor;
       this.renderer.setStyle(this.notesIcon.nativeElement, 'color', 'white');

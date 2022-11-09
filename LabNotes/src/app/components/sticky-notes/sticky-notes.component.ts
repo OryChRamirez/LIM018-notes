@@ -75,6 +75,11 @@ export class StickyNotesComponent implements OnInit {
     });
   }
 
+  getNotesByUser() {
+    this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
+      this.notesByUser = notes;
+    });
+  }
 
   showModalEditNoteOptions(i: number) {
     this.selecIndex = i;
@@ -117,10 +122,6 @@ export class StickyNotesComponent implements OnInit {
     if(newTitle === '' || newcontNote === '') {
       this.selecIndex = NaN;
       this.showEditOptions = false;
-      this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
-        this.notesByUser = notes;
-        console.log(this.notesByUser);
-      });
     } else {
       this.newDataLabel = {
         id: note.id,
@@ -139,27 +140,9 @@ export class StickyNotesComponent implements OnInit {
       }
       this.service.updateNoteContent(note.id, this.newDataLabel);  
     }    
-    this.renderer.setAttribute(
-      this.titleContent.nativeElement,
-      'readonly',
-      'true'
-    );
-    this.renderer.removeClass(this.titleContent.nativeElement, 'editNotes');
-    this.renderer.setAttribute(
-      this.txtContent.nativeElement,
-      'readonly',
-      'true'
-    );
-    this.renderer.removeClass(this.txtContent.nativeElement, 'editNotes');
-    this.selecIndex = NaN;
-    this.showEditOptions = false;
   }
 
   cancelEditNote() {
-    this.renderer.removeAttribute(this.titleContent.nativeElement, 'readonly');
-    this.renderer.removeClass(this.titleContent.nativeElement, 'editNotes');
-    this.renderer.removeAttribute(this.txtContent.nativeElement, 'readonly');
-    this.renderer.removeClass(this.txtContent.nativeElement, 'editNotes');
     this.selecIndex = NaN;
     this.showEditOptions = false;
   }
@@ -167,27 +150,18 @@ export class StickyNotesComponent implements OnInit {
   sendToTrash(idnote: string){
     this.service.sendNoteToTrash(idnote);
     this.showModalNotification = true;
-    this.service.getNotesTrashByUser(this.currUser).subscribe((notes) => {
-      this.notesByUser = notes;
-    });
     this.txtNotification = 'Nota enviada a la papelera';
   }
 
   sendToArchived(idNote: string){
     this.service.sendNoteToArchive(idNote);
     this.showModalNotification = true;
-    this.service.getNotesArchivedByUser(this.currUser).subscribe((notes) => {
-      this.notesByUser = notes;
-    });
     this.txtNotification = 'Nota enviada Archivo';
   }
 
   restoreNotesToInitFromTrash(idNote: string) {
     this.service.restoreNotes(idNote);
     this.showModalNotification = true;
-    this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
-      this.notesByUser = notes;
-    });
     this.txtNotification = 'Se ha enviado la nota al inicio';
 
   }
@@ -195,14 +169,17 @@ export class StickyNotesComponent implements OnInit {
   restoreNotesToInitFromArchived(idNote: string) {
     this.service.restoreNotes(idNote);
     this.showModalNotification = true;
-    this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
-      this.notesByUser = notes;
-    });
     this.txtNotification = 'Se ha enviado la nota al inicio';
   }
 
   closeModalNotification(){
     this.showModalNotification = false;
+    this.service.getDataNotesByUser(this.currUser).subscribe((valor) =>
+    {
+      this.notesByUser = valor;
+    });
+    this.service.$changeColorBlack.emit('black');
+    this.service.$changeColorWhite.emit('white');
   }
 
   deleteNote(idNote: string){
