@@ -141,7 +141,8 @@ export class StickyNotesComponent implements OnInit {
           trash: false,
         },
       }
-      this.service.updateNoteContent(note.id, this.newDataLabel);  
+      this.service.updateNoteContent(note.id, this.newDataLabel);
+      this.showEditOptions = false;
     }    
   }
 
