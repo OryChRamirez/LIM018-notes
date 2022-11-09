@@ -53,11 +53,12 @@ export class StickyNotesComponent implements OnInit {
   constructor(private renderer: Renderer2, private service: ServicesService) {}
 
   ngOnInit(): void {
+    this.service.$notesFilterByLabel.subscribe((valor) => this.notesByUser = valor);
     this.service.getDataLabelsByUser(this.currUser!).subscribe((labels) => {
       //TRAE LAS ETIQUETAS DEL USUARIO LOGUEADO
-      this.arrLabelsByUser = labels;
-      
+      this.arrLabelsByUser = labels; 
     });
+
     this.service.$showFilterNotes.subscribe((valor) =>{
       if(valor.allNotes) {
         this.service.getDataNotesByUser(this.currUser).subscribe((notes) => {
@@ -73,6 +74,7 @@ export class StickyNotesComponent implements OnInit {
         });
       }
     });
+
   }
 
   getNotesByUser() {
@@ -113,6 +115,7 @@ export class StickyNotesComponent implements OnInit {
       this.renderer.setStyle(this.colorAssignLabel.nativeElement ,'color', label.colorLabel);
       this.service.updateLabelInNote(idNote, label);
     }
+    this.getNotesByUser();
     this.statusAssignLabel = false;
   }
 
@@ -187,4 +190,5 @@ export class StickyNotesComponent implements OnInit {
     this.showModalNotification = true;
     this.txtNotification = 'Nota eliminada definitivamente';
   }
+
 }

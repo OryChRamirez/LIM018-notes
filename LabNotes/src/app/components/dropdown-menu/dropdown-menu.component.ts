@@ -224,10 +224,15 @@ export class DropdownMenuComponent implements OnInit {
       archivedNotes: true,
       trashNotes: false,
     }
-
     this.service.$showFilterNotes.emit(this.showNotes);
     this.renderer.setStyle(this.archivedIcon.nativeElement, 'color', 'white');
     this.renderer.setStyle(this.trashIcon.nativeElement, 'color', 'black');
     this.renderer.setStyle(this.notesIcon.nativeElement, 'color', 'black');
+  }
+
+  filterNoteByLabel(idUser: string, idLabel: string){
+    this.service.filterNotesByLabel(idLabel, idUser).subscribe((valor) =>{
+      this.service.$notesFilterByLabel.emit(valor);
+    })
   }
 }

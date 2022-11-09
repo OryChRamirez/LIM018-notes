@@ -17,12 +17,10 @@ import {
   doc,
   setDoc,
   updateDoc,
-  where,
 } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import labelFormat from './interfaces/labels.interface';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { idToken } from '@angular/fire/auth';
+import { AngularFirestore, CollectionReference } from '@angular/fire/compat/firestore';
 import NotesFormat from './interfaces/notes.interface';
 
 @Injectable({
@@ -137,9 +135,9 @@ export class ServicesService {
     // TRAE LAS ETIQUETAS SOLO DEL USUARIO LOGUEADO
     const dbRef = this.of.collection('dataNotes', (ref) =>
       ref
-        .where('status.archived', '==', false)
-        .where('status.trash', '==', false)
-        .where('idUser', '==', idUser)
+      .where('status.archived', '==', false)
+      .where('status.trash', '==', false)
+      .where('idUser', '==', idUser)
     );
     return dbRef.valueChanges({ idField: 'id' });
   }
@@ -226,11 +224,20 @@ export class ServicesService {
         },
       });
   }
+
   deleteNote(idNote: string) {
     //ELIMINA LA ETIQUETA DE LA COLECCIÓN
     return this.of.collection('dataNotes').doc(idNote).delete();
   }
 
+  filterNotesByLabel(idLabel: string, idUser:string) {
+      const dbRef = this.of.collection('dataNotes', (ref) =>
+        ref
+          .where('category.id', '==', idLabel)
+          .where('idUser', '==', idUser)
+      );
+      return dbRef.valueChanges({ idField: 'id' });
+  }
   /* -------------------- EVENT EMMITER -------------------- */
 
   $takeData = new EventEmitter<any>();
@@ -241,4 +248,5 @@ export class ServicesService {
   $showFilterNotes = new EventEmitter<any>();
   $changeColorWhite = new EventEmitter<any>();
   $changeColorBlack = new EventEmitter<any>();
+  $notesFilterByLabel = new EventEmitter<any>();
 }
