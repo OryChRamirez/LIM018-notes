@@ -124,7 +124,6 @@ export class StickyNotesComponent implements OnInit {
     const newcontNote = this.txtContent.nativeElement.value;
     if(newTitle === '' || newcontNote === '') {
       this.selecIndex = NaN;
-      this.showEditOptions = false;
     } else {
       this.newDataLabel = {
         id: note.id,
@@ -142,8 +141,8 @@ export class StickyNotesComponent implements OnInit {
         },
       }
       this.service.updateNoteContent(note.id, this.newDataLabel);
-      this.showEditOptions = false;
     }    
+    this.selecIndex = NaN;
   }
 
   cancelEditNote() {
